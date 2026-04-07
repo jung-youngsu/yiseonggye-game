@@ -4,381 +4,277 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>당신이 이성계라면? — 1화 아버지의 칼</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --bg:#050403; --bg2:#0e0b06; --bg3:#141008;
-  --amber:#c8820a; --gold:#f0c840; --ember:#d86020;
-  --text:#e8d8b8; --text2:#c0a878; --text3:#907858;
-  --border:#2a1e10; --border2:#3a2a18; --border3:#5a3e28;
-  --green:#1a5828; --green2:#208848; --green3:#50d870;
-  --red:#501818; --red2:#803020; --red3:#e06050;
-  --blue:#102840; --blue2:#1a4860; --blue3:#60a0d0;
+  --bg:#050403;--bg2:#0e0b06;--bg3:#141008;
+  --amber:#c8820a;--gold:#f0c840;--ember:#d86020;
+  --text:#e8d8b8;--text2:#c0a878;--text3:#907858;
+  --border:#2a1e10;--border2:#3a2a18;--border3:#5a3e28;
+  --green:#1a5828;--green2:#208848;--green3:#60e070;
+  --red:#501818;--red2:#803020;--red3:#f07060;
+  --blue:#102840;--blue2:#1a4860;--blue3:#70b0e0;
 }
-html{scroll-behavior:smooth;}
-body{
-  font-family:'Noto Sans KR',sans-serif;
-  background:var(--bg);color:var(--text);
-  min-height:100vh;max-width:640px;margin:0 auto;
-  padding:0;
-}
+html,body{height:100%;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);max-width:640px;margin:0 auto;}
 
-/* ── 씬 전환 ── */
-.sc{display:none;animation:fadein .6s ease;}
-.sc.on{display:block;}
-@keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.sc{display:none;}
+.sc.on{display:block;animation:fi .5s ease;}
+@keyframes fi{from{opacity:0;}to{opacity:1;}}
 
-/* ── 장 인트로 오버레이 ── */
-#intro-overlay{
-  display:none;
-  position:fixed;inset:0;z-index:999;
-  background:#030201;
-  flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:40px 32px;
-  animation:none;
-}
-#intro-overlay.show{
-  display:flex;
-  animation:intro-in .5s ease forwards;
-}
-#intro-overlay.hide{
-  animation:intro-out .5s ease forwards;
-}
-@keyframes intro-in{from{opacity:0;}to{opacity:1;}}
-@keyframes intro-out{from{opacity:1;}to{opacity:0;}}
+/* 진행바 */
+.prog{position:sticky;top:0;z-index:100;background:var(--bg);padding:8px 20px 6px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.prog-bar{flex:1;height:2px;background:var(--border2);border-radius:1px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--amber);transition:width .5s ease;}
+.prog-lbl{font-size:10px;color:var(--text3);letter-spacing:1px;white-space:nowrap;}
 
-.intro-act{
-  font-size:10px;letter-spacing:4px;color:#5a3e20;
-  margin-bottom:18px;
-}
-.intro-svg-wrap{
-  width:100%;max-width:440px;margin:0 auto 22px;
-}
-.intro-title{
-  font-family:'Noto Serif KR',serif;
-  font-size:26px;font-weight:700;color:#f0e0c0;
-  line-height:1.3;margin-bottom:10px;
-  opacity:0;animation:none;
-}
-.intro-overlay.show .intro-title{
-  animation:word-rise .6s ease .3s forwards;
-}
-@keyframes word-rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-.intro-sub{
-  font-family:'Noto Serif KR',serif;
-  font-size:13px;color:#a09060;line-height:1.8;
-  opacity:0;
-}
-.intro-tap{
-  font-size:11px;color:#4a3010;letter-spacing:2px;
-  margin-top:24px;
-  animation:blink 1.5s ease infinite;
-}
-@keyframes blink{0%,100%{opacity:.3;}50%{opacity:.8;}}
-
-/* ── 진행 바 ── */
-.progress-wrap{
-  position:sticky;top:0;z-index:100;
-  background:var(--bg);padding:8px 20px 6px;
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:10px;
-}
-.progress-bar{flex:1;height:2px;background:var(--border2);border-radius:1px;overflow:hidden;}
-.progress-fill{height:100%;background:var(--amber);transition:width .5s ease;}
-.progress-label{font-size:10px;color:var(--text3);letter-spacing:1px;white-space:nowrap;}
-
-/* ── 씬 헤더 ── */
+/* 씬 헤더 */
 .scene-head{padding:20px 20px 14px;border-bottom:1px solid var(--border);}
 .scene-era{font-size:10px;letter-spacing:3px;color:var(--text3);margin-bottom:5px;}
-.scene-title{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;
-  color:#f0e0c0;line-height:1.35;}
+.scene-title{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:#f0e0c0;line-height:1.35;}
 
-/* ── 일러스트 영역 ── */
-.art{width:100%;height:180px;background:#030508;overflow:hidden;}
-.art svg{width:100%;height:100%;display:block;}
+/* 일러스트 */
+.art{width:100%;background:#030508;overflow:hidden;}
+.art svg{width:100%;display:block;}
 
-/* ── 나레이션 ── */
-.narr{padding:18px 20px;font-family:'Noto Serif KR',serif;font-size:14px;line-height:2.1;color:#ddd0a0;}
-.narr em{color:var(--gold);font-style:normal;}
-.narr strong{color:#f8f0d0;font-weight:600;}
-.narr-who{font-size:10px;letter-spacing:2px;color:var(--text3);margin-bottom:10px;}
-
-/* ── 내면 독백 ── */
-.inner{
-  margin:0 20px 16px;padding:12px 16px;
-  border-left:2px solid var(--ember);background:#1a0e06;
-  font-family:'Noto Serif KR',serif;font-size:14px;color:#e0b868;line-height:2;font-style:italic;
+/* 나레이션 — 타이핑 전용 */
+.narr-block{padding:28px 24px 20px;}
+.narr-who{font-size:10px;letter-spacing:3px;color:var(--text3);margin-bottom:18px;}
+.narr-text{
+  font-family:'Noto Serif KR',serif;font-size:16px;line-height:2.4;color:#e0d0a0;
+  min-height:60px;
 }
+/* 커서 깜빡임 */
+.cursor{display:inline-block;width:2px;height:1.1em;background:#c8a050;margin-left:2px;vertical-align:text-bottom;animation:blink .7s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
 
-/* ── 대화 ── */
-.dial{margin:0 20px 16px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:14px 16px;}
-.dial-who{font-size:11px;color:#e08040;letter-spacing:1px;font-weight:500;margin-bottom:5px;}
-.dial-text{font-family:'Noto Serif KR',serif;font-size:14px;color:#d8c090;line-height:2;}
+/* 내면 독백 */
+.inner-block{padding:0 24px 20px;}
+.inner{padding:14px 18px;border-left:2px solid var(--ember);background:#160c06;font-family:'Noto Serif KR',serif;font-size:15px;color:#e0b868;line-height:2.2;font-style:italic;}
 
-/* ── 사실 카드 ── */
-.fact{margin:0 20px 16px;background:#0c1008;border:1px solid #283820;border-radius:8px;padding:13px 16px;}
-.fact-label{font-size:10px;letter-spacing:2px;color:#70b058;margin-bottom:7px;font-weight:500;}
-.fact-text{font-size:13px;color:#98c880;line-height:1.85;font-family:'Noto Serif KR',serif;}
+/* 대화 */
+.dial-block{padding:0 24px 20px;}
+.dial{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:16px 18px;}
+.dial-who{font-size:11px;color:#e08040;letter-spacing:1px;font-weight:500;margin-bottom:8px;}
+.dial-text{font-family:'Noto Serif KR',serif;font-size:15px;color:#d8c090;line-height:2.2;}
 
-/* ── 인사이트 ── */
-.insight{margin:0 20px 16px;background:#0e0e06;border:1px solid #303010;border-radius:8px;padding:13px 16px;}
-.ins-label{font-size:10px;letter-spacing:2px;color:#c8c040;margin-bottom:6px;font-weight:500;}
-.ins-text{font-size:13px;color:#b8b860;line-height:1.85;font-family:'Noto Serif KR',serif;}
+/* 사실 카드 */
+.fact-block{padding:0 24px 20px;}
+.fact{background:#0c1008;border:1px solid #283820;border-radius:8px;padding:16px 18px;}
+.fact-label{font-size:10px;letter-spacing:2px;color:#70b058;margin-bottom:10px;font-weight:500;}
+.fact-text{font-size:14px;color:#98c880;line-height:2;font-family:'Noto Serif KR',serif;}
 
-/* ── 기억 카드 (아코디언) ── */
-.mem-card{margin:0 20px 10px;border:1px solid var(--border2);border-radius:8px;overflow:hidden;cursor:pointer;}
-.mem-head{padding:12px 14px;display:flex;align-items:center;gap:12px;background:var(--bg2);transition:background .2s;}
-.mem-card:hover .mem-head{background:var(--bg3);}
-.mem-year{font-size:10px;color:var(--amber);font-weight:500;min-width:52px;letter-spacing:1px;}
-.mem-tag{font-size:13px;color:#d0c090;font-weight:500;flex:1;}
-.mem-arrow{font-size:14px;color:var(--text3);transition:transform .25s;}
-.mem-card.open .mem-arrow{transform:rotate(90deg);color:var(--amber);}
-.mem-body{display:none;padding:12px 14px;background:#0a0704;font-family:'Noto Serif KR',serif;font-size:13px;color:#b0a07a;line-height:1.85;border-top:1px solid var(--border);}
-.mem-card.open .mem-body{display:block;animation:fadein .3s ease;}
+/* 인사이트 */
+.insight-block{padding:0 24px 20px;}
+.insight{background:#0e0e06;border:1px solid #303010;border-radius:8px;padding:14px 18px;}
+.ins-label{font-size:10px;letter-spacing:2px;color:#c8c040;margin-bottom:8px;font-weight:500;}
+.ins-text{font-size:14px;color:#b8b860;line-height:2;font-family:'Noto Serif KR',serif;}
 
-/* ── 트래커 (TYPE_A) ── */
-.tracker{margin:0 20px 16px;background:#060e04;border:1px solid #182010;border-radius:8px;padding:13px 15px;}
-.tr-label{font-size:10px;letter-spacing:2px;color:#305828;margin-bottom:10px;font-weight:500;}
+/* 경고 */
+.warn-block{padding:0 24px 16px;}
+.warn{padding:10px 14px;background:#201208;border:1px solid #804028;border-radius:6px;font-size:12px;color:#d07848;line-height:1.8;}
+
+/* 선택지 */
+.ch-block{padding:8px 24px 28px;}
+.ch-label{font-size:10px;letter-spacing:3px;color:#786040;margin-bottom:8px;}
+.ch-note{font-size:12px;color:#907050;margin-bottom:14px;font-style:italic;}
+.badge-a{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;letter-spacing:2px;font-weight:500;margin-bottom:14px;background:#0a1e0c;border:1px solid var(--green2);color:#80e880;}
+.badge-b{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;letter-spacing:2px;font-weight:500;margin-bottom:14px;background:#141208;border:1px solid #505820;color:#c0c858;}
+
+.ch{width:100%;text-align:left;background:#100c06;border:1px solid var(--border2);border-radius:8px;padding:14px 16px;margin-bottom:10px;color:#c8b888;font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.8;cursor:pointer;display:flex;gap:12px;align-items:flex-start;transition:all .2s;}
+.ch:hover:not(.revealed):not(.good-pick):not(.bad-pick):not(.locked){background:#1e1408;border-color:var(--border3);color:#f0e0a0;}
+.ch.revealed{background:#081a0a;border-color:var(--green2);color:var(--green3);cursor:default;}
+.ch.good-pick{background:#081a0a;border-color:var(--green2);color:var(--green3);cursor:default;}
+.ch.bad-pick{background:#200a06;border-color:var(--red2);color:#e09080;cursor:default;}
+.ch.neutral-pick{background:#080e1e;border-color:var(--blue2);color:var(--blue3);cursor:default;}
+.ch.locked{opacity:.35;cursor:default;}
+.ch-n{flex-shrink:0;width:26px;height:26px;border:1px solid #3a2810;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:#6a4828;}
+
+/* 트래커 */
+.tracker-block{padding:0 24px 16px;}
+.tracker{background:#0a1408;border:1px solid #284020;border-radius:8px;padding:14px 16px;}
+.tr-label{font-size:10px;letter-spacing:2px;color:#80b868;margin-bottom:10px;font-weight:500;}
 .tr-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
-.chip{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;
-  border:1px solid #1e3018;color:#305828;background:#060c04;transition:all .35s;}
-.chip.found{border-color:var(--green2);color:var(--green3);background:#061208;}
+.chip{padding:4px 14px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid #304828;color:#80a860;background:#0c1608;transition:all .35s;}
+.chip.found{border-color:var(--green2);color:#90f080;background:#0a1e0a;}
 .chip.found::before{content:'✓ ';}
-.tr-bar{height:2px;background:#102008;border-radius:1px;overflow:hidden;}
+.tr-bar{height:2px;background:#182810;border-radius:1px;overflow:hidden;}
 .tr-fill{height:100%;background:var(--green2);transition:width .45s ease;width:0%;}
-.tr-count{font-size:11px;color:#285020;margin-top:7px;}
+.tr-count{font-size:11px;color:#60a050;margin-top:7px;}
 
-/* ── 선택지 ── */
-.ch-area{padding:4px 20px 20px;}
-.ch-label{font-size:10px;letter-spacing:3px;color:#3a2818;margin-bottom:6px;}
-.ch-note{font-size:11px;color:#3a3010;margin-bottom:12px;font-style:italic;}
-.badge-a{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;letter-spacing:2px;
-  font-weight:500;margin-bottom:12px;background:#0a1e0c;border:1px solid var(--green2);color:#80e880;}
-.badge-b{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;letter-spacing:2px;
-  font-weight:500;margin-bottom:12px;background:#141208;border:1px solid #505820;color:#c0c858;}
-
-.ch{
-  width:100%;text-align:left;background:#100c06;border:1px solid var(--border2);border-radius:8px;
-  padding:13px 15px;margin-bottom:9px;color:#c8b888;font-family:'Noto Sans KR',sans-serif;
-  font-size:13px;line-height:1.75;cursor:pointer;display:flex;gap:12px;align-items:flex-start;transition:all .2s;
-}
-.ch:hover:not(.revealed):not(.good-pick):not(.bad-pick):not(.locked){
-  background:#1e1408;border-color:var(--border3);color:#f0e0a0;transform:translateX(2px);
-}
-.ch.revealed{background:#061208;border-color:var(--green2);color:var(--green3);cursor:default;}
-.ch.revealed .ch-n{border-color:var(--green2);color:#50c870;}
-.ch.good-pick{background:#061208;border-color:var(--green2);color:var(--green3);cursor:default;}
-.ch.bad-pick{background:#180806;border-color:var(--red2);color:#d07060;cursor:default;}
-.ch.neutral-pick{background:#060c18;border-color:var(--blue2);color:var(--blue3);cursor:default;}
-.ch.locked{opacity:.4;cursor:default;}
-.ch-n{
-  flex-shrink:0;width:24px;height:24px;border:1px solid #3a2810;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;font-size:11px;color:#6a4828;
-}
-
-/* ── 개별 답 설명 ── */
-.ans{margin:0 20px 10px;border-radius:8px;padding:13px 15px;display:none;animation:fadein .35s ease;
-  background:#081a0a;border:1px solid #285830;}
+/* 개별 답 / 종합 해설 */
+.ans{margin:0 24px 12px;border-radius:8px;padding:14px 16px;display:none;animation:fi .3s ease;background:#081a0a;border:1px solid #285830;}
 .ans.on{display:block;}
-.ans-title{font-size:11px;color:#70e080;letter-spacing:1px;margin-bottom:7px;font-weight:500;}
-.ans-body{font-family:'Noto Serif KR',serif;font-size:13px;color:#a8d0a0;line-height:1.85;}
-
-/* ── 종합 해설 ── */
-.summary{margin:0 20px 16px;border-radius:8px;padding:14px 16px;display:none;animation:fadein .45s ease;
-  background:#0a1a0a;border:1px solid var(--green2);}
+.ans-title{font-size:11px;color:#70e080;letter-spacing:1px;margin-bottom:8px;font-weight:500;}
+.ans-body{font-family:'Noto Serif KR',serif;font-size:14px;color:#a8d0a0;line-height:1.9;}
+.summary{margin:0 24px 16px;border-radius:8px;padding:14px 16px;display:none;animation:fi .4s ease;background:#0a1a0a;border:1px solid var(--green2);}
 .summary.on{display:block;}
 .sum-label{font-size:11px;color:#80e880;letter-spacing:1px;margin-bottom:8px;font-weight:500;}
-.sum-body{font-family:'Noto Serif KR',serif;font-size:13px;color:#b0d8a0;line-height:2;}
+.sum-body{font-family:'Noto Serif KR',serif;font-size:14px;color:#b0d8a0;line-height:1.9;}
 
-/* ── 결과 박스 (TYPE_B) ── */
-.res{margin:0 20px 16px;border-radius:8px;padding:14px 16px;display:none;animation:fadein .35s ease;}
+/* 결과 박스 */
+.res{margin:0 24px 16px;border-radius:8px;padding:14px 16px;display:none;animation:fi .3s ease;}
 .res.on{display:block;}
 .res.good{background:#081a0a;border:1px solid var(--green2);}
 .res.bad{background:#200a06;border:1px solid var(--red2);}
 .res.neutral{background:#080e1e;border:1px solid var(--blue2);}
 .res-title{font-size:11px;letter-spacing:1px;font-weight:500;margin-bottom:8px;}
 .res.good .res-title{color:#80e880;}
-.res.bad .res-title{color:#f07060;}
-.res.neutral .res-title{color:#80b8e0;}
-.res-body{font-family:'Noto Serif KR',serif;font-size:13px;line-height:2;}
+.res.bad .res-title{color:var(--red3);}
+.res.neutral .res-title{color:var(--blue3);}
+.res-body{font-family:'Noto Serif KR',serif;font-size:14px;line-height:1.9;}
 .res.good .res-body{color:#a8e0a0;}
 .res.bad .res-body{color:#e8a898;}
 .res.neutral .res-body{color:#98c8e8;}
 .res-nav{margin-top:12px;}
 
-/* ── 경고 ── */
-.warn{margin:0 20px 14px;padding:9px 14px;background:#201208;border:1px solid #804028;
-  border-radius:6px;font-size:11px;color:#d07848;line-height:1.7;}
-
-/* ── 네비게이션 버튼 ── */
-.nav-area{padding:0 20px 24px;display:flex;gap:8px;flex-wrap:wrap;}
-.btn-p{
-  padding:10px 22px;border-radius:22px;font-size:13px;font-weight:500;cursor:pointer;
-  font-family:'Noto Sans KR',sans-serif;transition:all .2s;
-  background:#2a1006;border:1px solid #a05818;color:#f0c860;
-}
+/* 네비 버튼 */
+.nav-area{padding:0 24px 28px;display:flex;gap:8px;flex-wrap:wrap;}
+.btn-p{padding:11px 24px;border-radius:24px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .2s;background:#2a1006;border:1px solid #a05818;color:#f0c860;}
 .btn-p:hover{background:#3e1a0a;border-color:var(--gold);}
-.btn-s{
-  padding:10px 22px;border-radius:22px;font-size:13px;font-weight:500;cursor:pointer;
-  font-family:'Noto Sans KR',sans-serif;transition:all .2s;
-  background:transparent;border:1px solid var(--border3);color:var(--text3);
-}
+.btn-s{padding:11px 24px;border-radius:24px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .2s;background:transparent;border:1px solid var(--border3);color:var(--text3);}
 .btn-s:hover{border-color:#6a4020;color:#a07050;}
 
-/* ── 오프닝 특수 스타일 ── */
+/* ── 오프닝 ── */
 .opening{
-  min-height:100vh;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;padding:48px 28px;text-align:center;background:var(--bg);
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:0;text-align:center;overflow:hidden;
+  position:relative;
 }
-.opening-emblem{
-  width:88px;height:88px;border-radius:50%;border:1px solid #3a2010;
-  display:flex;align-items:center;justify-content:center;margin:0 auto 28px;position:relative;
+/* 어진 이미지 영역 */
+.op-portrait{
+  width:100%;max-width:320px;margin:0 auto 24px;
+  opacity:0;transition:opacity 1.4s ease;
 }
-.opening-emblem::before{
-  content:'';position:absolute;width:72px;height:72px;border-radius:50%;border:1px solid #201408;
+.op-portrait.show{opacity:1;}
+.op-portrait img{
+  width:100%;border-radius:4px;
+  border:1px solid #3a2010;
+  box-shadow:0 0 40px rgba(0,0,0,.8);
 }
-.opening-title{
-  font-family:'Noto Serif KR',serif;font-size:34px;font-weight:700;
-  color:#f0d888;margin-bottom:8px;
+/* 시리즈 레이블 */
+.op-series{
+  font-size:11px;color:var(--text3);letter-spacing:3px;
+  margin-bottom:32px;
+  opacity:0;transition:opacity 1s ease;
 }
-.opening-series{font-size:12px;color:var(--text3);letter-spacing:3px;margin-bottom:36px;}
-.opening-hook{
-  font-family:'Noto Serif KR',serif;font-size:15px;color:#a09060;line-height:2.4;
-  max-width:440px;margin-bottom:36px;
+.op-series.show{opacity:1;}
+/* 첫 번째 문장 그룹 — 3줄 동시 */
+.op-group1{
+  font-family:'Noto Serif KR',serif;font-size:16px;
+  color:#c8b880;line-height:2.4;
+  opacity:0;transition:opacity 1.3s ease;
+  margin-bottom:0;
 }
-.opening-hook em{color:var(--gold);font-style:normal;font-weight:600;}
-.opening-cta{
-  font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:#f0d888;
-  background:#1a0c04;border:1px solid #a06820;padding:14px 48px;border-radius:2px;
-  cursor:pointer;letter-spacing:2px;transition:all .2s;
+.op-group1.show{opacity:1;}
+/* 두 번째 문장 그룹 */
+.op-group2{
+  font-family:'Noto Serif KR',serif;font-size:16px;
+  color:#c8b880;line-height:2.4;
+  opacity:0;transition:opacity 1.3s ease;
+  margin-bottom:36px;
 }
-.opening-cta:hover{background:#2e1608;border-color:var(--gold);}
-.opening-disc{font-size:10px;color:#302010;margin-top:20px;line-height:1.8;max-width:380px;}
+.op-group2 em{color:var(--gold);font-style:normal;font-weight:600;}
+.op-group2.show{opacity:1;}
+/* CTA 버튼 */
+.op-cta{
+  font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;
+  color:#f0d888;background:#1a0c04;border:1px solid #a06820;
+  padding:14px 48px;border-radius:2px;cursor:pointer;
+  letter-spacing:2px;transition:all .2s;
+  opacity:0;
+}
+.op-cta.show{opacity:1;transition:opacity 1s ease, background .2s, border-color .2s;}
+.op-cta:hover{background:#2e1608;border-color:var(--gold);}
+.op-disc{font-size:10px;color:#302010;margin-top:20px;line-height:1.8;max-width:380px;opacity:0;transition:opacity 1s ease;}
+.op-disc.show{opacity:1;}
+.op-wrap{padding:0 28px 48px;width:100%;max-width:480px;}
+
+/* ── 뒤로가기 버튼 ── */
+.btn-back{position:fixed;top:16px;left:14px;z-index:200;background:transparent;border:none;font-size:13px;color:var(--text3);cursor:pointer;font-family:'Noto Sans KR',sans-serif;padding:6px 10px;border-radius:6px;transition:color .2s;}
+.btn-back:hover{color:var(--text);}
+.btn-back::before{content:'← ';}
 
 /* ── 환생 시퀀스 ── */
-.rebirth-wrap{
-  min-height:100vh;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;padding:40px 28px;text-align:center;
-}
-.rb-line{
-  font-family:'Noto Serif KR',serif;font-size:17px;color:#c0b070;line-height:1;
-  margin-bottom:0;opacity:0;transform:translateY(8px);transition:opacity .8s ease,transform .8s ease;
-}
-.rb-line.show{opacity:1;transform:translateY(0);}
-.rb-line.dim{color:#c8a870;}
-.rb-line.gold{color:var(--gold);font-size:22px;font-weight:700;}
-.rb-line.small{font-size:13px;color:#d0b880;letter-spacing:2px;font-weight:600;}
-.rb-sep{width:1px;height:26px;background:var(--border2);margin:14px auto;
-  opacity:0;transition:opacity .8s ease;}
-.rb-sep.show{opacity:1;}
-.rb-portal{
-  width:130px;height:130px;border-radius:50%;
-  margin:28px auto;display:flex;align-items:center;justify-content:center;
-  opacity:0;transition:opacity 1s ease;position:relative;
-}
+.rebirth-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;text-align:center;}
+.rb-stage{min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;width:100%;}
+.rb-sentence{font-family:'Noto Serif KR',serif;font-size:20px;color:#d8c890;line-height:1.7;opacity:0;transition:opacity 1.2s ease;}
+.rb-sentence.gold{color:var(--gold);font-size:24px;font-weight:700;}
+.rb-sentence.small{font-size:13px;color:#c8b070;letter-spacing:3px;}
+.rb-sentence.dim{color:#c0a870;font-size:17px;}
+.rb-sentence.show{opacity:1;}
+.rb-portal{width:130px;height:130px;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 1s ease;position:relative;margin:0 auto;}
 .rb-portal.show{opacity:1;}
-.rb-ring-outer{
-  position:absolute;inset:0;border-radius:50%;
-  border:2px solid transparent;
-  border-top:2px solid var(--amber);
-  border-right:2px solid var(--amber);
-  animation:none;
-}
-.rb-portal.show .rb-ring-outer{
-  animation:spin-outer 2s linear infinite;
-}
-.rb-ring-mid{
-  position:absolute;inset:12px;border-radius:50%;
-  border:1.5px solid transparent;
-  border-bottom:1.5px solid #e0c860;
-  border-left:1.5px solid #e0c860;
-  animation:none;
-}
-.rb-portal.show .rb-ring-mid{
-  animation:spin-mid 1.4s linear infinite reverse;
-}
-.rb-ring-inner{
-  position:absolute;inset:26px;border-radius:50%;
-  border:1px solid transparent;
-  border-top:1px solid #f0d880;
-  animation:none;
-}
-.rb-portal.show .rb-ring-inner{
-  animation:spin-outer 1s linear infinite;
-}
-@keyframes spin-outer{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
-@keyframes spin-mid{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
-.rb-glyph{
-  font-family:'Noto Serif KR',serif;font-size:30px;font-weight:700;color:var(--amber);
-  opacity:0;transition:opacity 1.2s ease .5s;position:relative;z-index:1;
-}
+.rb-ring-outer{position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top:2px solid var(--amber);border-right:2px solid var(--amber);}
+.rb-portal.show .rb-ring-outer{animation:spin 2s linear infinite;}
+.rb-ring-mid{position:absolute;inset:12px;border-radius:50%;border:1.5px solid transparent;border-bottom:1.5px solid #e0c860;border-left:1.5px solid #e0c860;}
+.rb-portal.show .rb-ring-mid{animation:spin 1.4s linear infinite reverse;}
+.rb-ring-inner{position:absolute;inset:26px;border-radius:50%;border:1px solid transparent;border-top:1px solid #f0d880;}
+.rb-portal.show .rb-ring-inner{animation:spin 1s linear infinite;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.rb-glyph{font-family:'Noto Serif KR',serif;font-size:30px;font-weight:700;color:var(--amber);opacity:0;transition:opacity 1.2s ease .5s;position:relative;z-index:1;}
 .rb-portal.show .rb-glyph{opacity:1;}
 
-/* ── 기억 열기 헤더 ── */
-.mem-section-head{padding:18px 20px 12px;border-bottom:1px solid var(--border);}
+/* ── 기억 카드 ── */
+.mem-section-head{padding:18px 24px 12px;border-bottom:1px solid var(--border);}
 .mem-section-era{font-size:10px;letter-spacing:3px;color:var(--text3);margin-bottom:4px;}
 .mem-section-title{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:#f0e0c0;}
-.mem-note{padding:10px 20px;font-size:11px;color:var(--text3);font-style:italic;}
+.mem-note{padding:10px 24px;font-size:12px;color:var(--text3);font-style:italic;}
+.mem-card{margin:0 24px 10px;border:1px solid var(--border2);border-radius:8px;overflow:hidden;cursor:pointer;}
+.mem-head{padding:14px 16px;display:flex;align-items:center;gap:12px;background:var(--bg2);transition:background .2s;}
+.mem-card:hover .mem-head{background:var(--bg3);}
+.mem-year{font-size:10px;color:var(--amber);font-weight:500;min-width:52px;letter-spacing:1px;}
+.mem-tag{font-size:14px;color:#d0c090;font-weight:500;flex:1;}
+.mem-arrow{font-size:14px;color:var(--text3);transition:transform .25s;}
+.mem-card.open .mem-arrow{transform:rotate(90deg);color:var(--amber);}
+.mem-body{display:none;padding:14px 16px;background:#0a0704;font-family:'Noto Serif KR',serif;font-size:14px;color:#b0a07a;line-height:1.9;border-top:1px solid var(--border);}
+.mem-card.open .mem-body{display:block;animation:fi .3s ease;}
+
+/* ── 인트로 오버레이 ── */
+#intro-overlay{display:none;position:fixed;inset:0;z-index:999;background:#030201;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 32px;}
+#intro-overlay.show{display:flex;animation:fi .5s ease forwards;}
+#intro-overlay.hide{animation:fade-out .5s ease forwards;}
+@keyframes fade-out{from{opacity:1;}to{opacity:0;}}
+.intro-act{font-size:10px;letter-spacing:4px;color:#5a3e20;margin-bottom:18px;}
+.intro-svg-wrap{width:100%;max-width:440px;margin:0 auto 22px;}
+.intro-title{font-family:'Noto Serif KR',serif;font-size:26px;font-weight:700;color:#f0e0c0;line-height:1.3;margin-bottom:10px;}
+.intro-sub{font-family:'Noto Serif KR',serif;font-size:13px;color:#a09060;line-height:1.8;}
+.intro-tap{font-size:11px;color:#4a3010;letter-spacing:2px;margin-top:24px;animation:blink2 1.5s ease infinite;}
+@keyframes blink2{0%,100%{opacity:.3;}50%{opacity:.8;}}
 
 /* ── 에필로그 ── */
-.epilogue{padding:32px 20px;text-align:center;}
+.epilogue{padding:32px 24px;text-align:center;}
 .epi-year{font-size:10px;letter-spacing:3px;color:var(--text3);margin-bottom:14px;}
-.epi-big{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;color:#f0e0c0;
-  margin-bottom:20px;line-height:1.4;}
-.epi-body{font-family:'Noto Serif KR',serif;font-size:14px;color:#a09060;line-height:2.3;
-  max-width:420px;margin:0 auto 24px;}
-.epi-quote{
-  border-top:1px solid var(--border3);border-bottom:1px solid var(--border3);
-  padding:14px 20px;margin:20px 0;
-  font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;color:var(--gold);
-  letter-spacing:1px;
-}
-.epi-summary{
-  background:#0a0804;border:1px solid var(--border2);border-radius:10px;
-  padding:16px;text-align:left;margin:0 0 24px;
-}
+.epi-big{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;color:#f0e0c0;margin-bottom:20px;line-height:1.4;}
+.epi-body{font-family:'Noto Serif KR',serif;font-size:15px;color:#a09060;line-height:2.3;max-width:420px;margin:0 auto 24px;}
+.epi-quote{border-top:1px solid var(--border3);border-bottom:1px solid var(--border3);padding:14px 20px;margin:20px 0;font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--gold);letter-spacing:1px;}
+.epi-summary{background:#0a0804;border:1px solid var(--border2);border-radius:10px;padding:16px;text-align:left;margin:0 0 24px;}
 .epi-sum-label{font-size:10px;color:var(--text3);letter-spacing:2px;margin-bottom:10px;}
-.epi-sum-item{font-size:12px;color:#807050;line-height:2.1;}
-.epi-preview{font-size:11px;color:#302010;margin-top:16px;line-height:1.8;}
+.epi-sum-item{font-size:13px;color:#807050;line-height:2.2;}
 
-/* ── 후기 작성 ── */
-.journal{padding:20px;}
-.journal-head{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:#f0e0c0;margin-bottom:5px;}
-.journal-sub{font-size:10px;letter-spacing:2px;color:var(--text3);margin-bottom:14px;}
-.journal-prompt{
-  font-family:'Noto Serif KR',serif;font-size:13px;color:#706040;line-height:1.85;
-  margin-bottom:16px;padding:12px 14px;background:var(--bg2);
-  border-left:2px solid var(--border3);border-radius:0 6px 6px 0;
-}
+/* ── 후기 ── */
+.journal{padding:24px;}
+.journal-head{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:#f0e0c0;margin-bottom:5px;}
+.journal-sub{font-size:10px;letter-spacing:2px;color:var(--text3);margin-bottom:16px;}
+.journal-prompt{font-family:'Noto Serif KR',serif;font-size:14px;color:#706040;line-height:2;margin-bottom:18px;padding:14px 16px;background:var(--bg2);border-left:2px solid var(--border3);border-radius:0 6px 6px 0;}
 .journal-prompt em{color:#a09050;font-style:normal;}
-textarea{
-  width:100%;min-height:130px;background:#080604;border:1px solid var(--border2);
-  border-radius:8px;padding:14px;color:#c0b080;font-family:'Noto Serif KR',serif;
-  font-size:13px;line-height:2;resize:vertical;outline:none;
-}
+textarea{width:100%;min-height:140px;background:#080604;border:1px solid var(--border2);border-radius:8px;padding:14px;color:#c0b080;font-family:'Noto Serif KR',serif;font-size:14px;line-height:2;resize:vertical;outline:none;}
 textarea:focus{border-color:var(--border3);}
 textarea::placeholder{color:#302018;}
-.journal-saved{
-  display:none;margin-top:14px;padding:14px;background:var(--bg2);
-  border:1px solid var(--border2);border-radius:8px;
-}
+.journal-saved{display:none;margin-top:16px;padding:16px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;}
 .journal-saved-label{font-size:10px;letter-spacing:2px;color:var(--text3);margin-bottom:8px;}
-.journal-saved-text{font-family:'Noto Serif KR',serif;font-size:13px;color:#a09060;line-height:2;}
-.journal-note{font-size:10px;color:#302010;margin-top:12px;line-height:1.8;}
+.journal-saved-text{font-family:'Noto Serif KR',serif;font-size:14px;color:#a09060;line-height:2;}
+.journal-note{font-size:11px;color:#302010;margin-top:12px;line-height:1.8;}
+.epi-preview{font-size:11px;color:#302010;margin-top:20px;line-height:1.9;}
 
-/* ── 반응형 ── */
-@media(max-width:400px){
-  .opening-title{font-size:28px;}
-  .scene-title{font-size:17px;}
-  .ch{font-size:12px;padding:11px 12px;}
-}
+@media(max-width:400px){.op-title{font-size:28px;}.scene-title{font-size:17px;}.narr-text{font-size:14px;}}
 </style>
 </head>
 <body>
 
-<!-- ████ 장 인트로 오버레이 ████ -->
+<!-- 인트로 오버레이 -->
 <div id="intro-overlay" onclick="skipIntro()">
   <div class="intro-act" id="intro-act"></div>
   <div class="intro-svg-wrap" id="intro-svg"></div>
@@ -387,493 +283,494 @@ textarea::placeholder{color:#302018;}
   <div class="intro-tap">탭하여 계속</div>
 </div>
 
-<!-- ████ 씬 0: 오프닝 ████ -->
+<!-- ■ 씬 0: 오프닝 -->
 <div class="sc on" id="s0">
 <div class="opening">
-  <div class="opening-emblem">
-    <svg width="40" height="40" viewBox="0 0 40 40">
-      <circle cx="20" cy="20" r="18" fill="none" stroke="#5a3010" stroke-width=".8"/>
-      <text x="20" y="26" text-anchor="middle" fill="#c8820a" font-size="18" font-family="serif" font-weight="700">將</text>
-    </svg>
+  <div class="op-wrap">
+    <!-- 어진 이미지 -->
+    <div class="op-portrait" id="op-portrait">
+      <img src="https://raw.githubusercontent.com/jung-youngsu/yiseonggye-game/main/%ED%83%9C%EC%A1%B0%20%EC%9D%B4%EC%84%B1%EA%B3%84%20%EC%96%B4%EC%A7%84.png" alt="태조 이성계 어진" style="width:100%;border-radius:4px;border:1px solid #3a2010;">
+    </div>
+
+    <!-- 시리즈 레이블 -->
+    <div class="op-series" id="op-series">역사체험 교육 게임 · 조선 창건 시리즈 1화</div>
+
+    <!-- 첫 번째 문장 그룹 (3줄 동시 페이드인) -->
+    <div class="op-group1" id="op-group1">
+      고려의 밤으로 지금 들어간다.<br>
+      이성계의 기억을 불러온다.<br>
+      이제 당신의 이야기가 시작된다.
+    </div>
+
+    <!-- 두 번째 문장 그룹 (페이드아웃 후 페이드인) -->
+    <div class="op-group2" id="op-group2">
+      당신의 선택에 따라<br>
+      우리는 이 땅에서 살 수도 있고,<br>
+      <em>태어나지 못했을 수도 있습니다.</em>
+    </div>
+
+    <!-- CTA 버튼 -->
+    <button class="op-cta" id="op-cta" onclick="startRebirth()">▶ 환생하다 —</button>
+    <div class="op-disc" id="op-disc">※ 역사는 승리자의 편에서 서술됩니다. 이 앱의 시나리오는 교육 목적의 재구성이며, 선구자의 선택을 이해하는 것이 목적입니다.</div>
   </div>
-  <div class="opening-title">당신이 이성계라면?</div>
-  <div class="opening-series">역사체험 교육 게임 · 조선 창건 시리즈 1화</div>
-  <div class="opening-hook">
-    고려의 밤으로 지금 들어간다.<br>
-    <em>이성계의 기억을 불러온다.</em><br>
-    이제 당신의 이야기가 시작된다.<br><br>
-    당신의 선택에 따라<br>
-    우리는 이 땅에서 살 수도 있고,<br>
-    <em>태어나지 못했을 수도 있습니다.</em>
-  </div>
-  <button class="opening-cta" onclick="startRebirth()">▶ 환생하다 —</button>
-  <div class="opening-disc">※ 역사는 승리자의 편에서 서술됩니다. 이 앱의 시나리오는 교육 목적의 재구성이며, 선구자의 선택을 이해하는 것이 목적입니다.</div>
 </div>
 </div>
 
-<!-- ████ 씬 1: 환생 시퀀스 ████ -->
+<!-- ■ 씬 1: 환생 시퀀스 -->
 <div class="sc" id="s1">
+<button class="btn-back" onclick="switchScene(0)">처음으로</button>
 <div class="rebirth-wrap">
-  <div class="rb-line small" id="rb0">1335년 · 고려 · 함경도 화령</div>
-  <div class="rb-sep" id="rs0"></div>
-  <div class="rb-line" id="rb1">어둠 속에 목소리가 들린다</div>
-  <div class="rb-sep" id="rs1"></div>
-  <div class="rb-portal" id="rb-portal">
-    <div class="rb-ring-outer"></div>
-    <div class="rb-ring-mid"></div>
-    <div class="rb-ring-inner"></div>
+  <div class="rb-stage" id="rb-stage">
+    <!-- 문장들은 JS가 동적으로 채움 -->
+  </div>
+  <div class="rb-portal" id="rb-portal" style="display:none;margin-top:28px;">
+    <div class="rb-ring-outer"></div><div class="rb-ring-mid"></div><div class="rb-ring-inner"></div>
     <div class="rb-glyph">朝</div>
   </div>
-  <div class="rb-sep" id="rs2"></div>
-  <div class="rb-line" id="rb2">낯선 몸이다</div>
-  <div class="rb-sep" id="rs3"></div>
-  <div class="rb-line" id="rb3">무겁다 — 갑옷인가</div>
-  <div class="rb-sep" id="rs4"></div>
-  <div class="rb-line" id="rb4">손에 칼이 쥐어져 있다</div>
-  <div class="rb-sep" id="rs5"></div>
-  <div class="rb-line dim" id="rb5">누군가 울고 있다</div>
-  <div class="rb-sep" id="rs6"></div>
-  <div class="rb-line gold" id="rb6">이성계의 기억이 흘러든다</div>
-  <div class="rb-sep" id="rs7"></div>
-  <div class="rb-line small" id="rb7">당신은 지금 — 1356년의 이성계다</div>
-  <div id="rb-cta" style="margin-top:32px;opacity:0;transition:opacity 1s ease;">
-    <button class="opening-cta" onclick="go(2)" style="font-size:14px;padding:12px 40px;">기억을 열다</button>
+  <div id="rb-cta" style="margin-top:36px;opacity:0;transition:opacity 1s ease;">
+    <button class="op-cta" onclick="go(2)" style="font-size:14px;padding:12px 40px;">기억을 열다</button>
   </div>
 </div>
 </div>
 
-<!-- ████ 씬 2: 기억 열기 ████ -->
+<!-- ■ 씬 2: 기억 열기 -->
 <div class="sc" id="s2">
 <div class="mem-section-head">
   <div class="mem-section-era">이성계의 기억 · 1335 – 1388</div>
   <div class="mem-section-title">이 몸이 살아온 32년</div>
 </div>
 <div class="mem-note">기억 조각을 열어보세요 — 혹은 바로 이야기 속으로</div>
-
 <div class="mem-card" onclick="toggleMem(this)">
   <div class="mem-head"><span class="mem-year">1335년</span><span class="mem-tag">태어남 · 쌍성총관부</span><span class="mem-arrow">›</span></div>
-  <div class="mem-body">원나라가 고려 북쪽 땅을 빼앗아 다스린 지 100년. 이 땅에서 태어난다는 것은 처음부터 두 개의 세상 사이에 끼어 있다는 것이다. 고려인인가, 원나라 사람인가. 아버지 이자춘은 말했다: "우리는 고려 사람이다." 그러나 그 말을 큰 소리로 할 수 없는 곳이었다.</div>
+  <div class="mem-body">원나라가 고려 북쪽 땅을 빼앗아 다스린 지 100년. 고려인인가, 원나라 사람인가. 아버지 이자춘은 말했다: "우리는 고려 사람이다." 그러나 그 말을 큰 소리로 할 수 없는 곳이었다.</div>
 </div>
 <div class="mem-card" onclick="toggleMem(this)">
   <div class="mem-head"><span class="mem-year">1356년</span><span class="mem-tag">아버지의 칼 · 열여섯</span><span class="mem-arrow">›</span></div>
-  <div class="mem-body">공민왕의 반원정책. 아버지가 봉기에 가담했다. 동지 셋이 처형당하는 것을 담장 뒤에서 봤다. 그날 밤 아버지가 칼을 건넸다. "명분 없이는 이겨도 지는 것이다." 무거웠다. 지금도 무겁다.</div>
+  <div class="mem-body">공민왕의 반원정책. 아버지가 봉기에 가담했다. 동지 셋이 처형당하는 것을 담장 뒤에서 봤다. 그날 밤 아버지가 칼을 건넸다. "명분 없이는 이겨도 지는 것이다."</div>
 </div>
 <div class="mem-card" onclick="toggleMem(this)">
   <div class="mem-head"><span class="mem-year">1361년</span><span class="mem-tag">첫 전투 · 홍건적</span><span class="mem-arrow">›</span></div>
-  <div class="mem-body">스물여섯. 처음으로 독립 지휘관이 됐다. 병사 2천, 적은 5천이 넘었다. 새벽 기습을 선택했다. 이겼다. 이지란이 어깨에 화살을 맞고도 웃었다. 그날 이후 그는 내 오른팔이 됐다.</div>
+  <div class="mem-body">스물여섯. 처음으로 독립 지휘관이 됐다. 병사 2천, 적은 5천이 넘었다. 새벽 기습을 선택했다. 이겼다. 이지란이 어깨에 화살을 맞고도 웃었다.</div>
 </div>
 <div class="mem-card" onclick="toggleMem(this)">
   <div class="mem-head"><span class="mem-year">1380년</span><span class="mem-tag">황산대첩 · 마흔다섯</span><span class="mem-arrow">›</span></div>
-  <div class="mem-body">왜구 10만 대 아군 5천. 왜구의 전설적 장수 아기발도. 이지란과 2단 공격으로 무너뜨렸다. 혼자 이기려 하지 않았다 — 그래서 이겼다. 고려 전체가 내 이름을 알게 됐다.</div>
+  <div class="mem-body">왜구 10만 대 아군 5천. 이지란과 2단 공격으로 아기발도를 무너뜨렸다. 혼자 이기려 하지 않았다 — 그래서 이겼다.</div>
 </div>
 <div class="mem-card" onclick="toggleMem(this)">
   <div class="mem-head"><span class="mem-year">1388년</span><span class="mem-tag">지금 이 순간 · 출정 명령</span><span class="mem-arrow">›</span></div>
-  <div class="mem-body">명나라가 고려 북쪽 땅을 내놓으라 했다. 최영이 격노했다. 왕이 결정했다: 요동 정벌. 지휘관은 나. 4만 8천 명. 그런데 지금은 농번기다. 강은 범람한다. 명나라 군사는 100만이다. 이 전쟁은 — 불가능하다.</div>
+  <div class="mem-body">요동 정벌 명령. 4만 8천 명. 농번기. 강은 범람한다. 명나라 군사는 100만이다. 이 전쟁은 — 불가능하다.</div>
 </div>
-
-<div class="nav-area" style="padding-top:8px;">
-  <button class="btn-p" onclick="go(3)">이야기 속으로 — 1356년 봄 →</button>
+<div class="nav-area" style="padding-top:12px;">
+  <button class="btn-p" onclick="go(3)">이야기 속으로 →</button>
   <div style="font-size:11px;color:var(--text3);margin-top:8px;width:100%;">기억은 언제든 다시 돌아볼 수 있습니다</div>
 </div>
 </div>
 
-<!-- ████ 씬 3: 0막 — 처형의 밤 (TYPE_A) ████ -->
+<!-- ■ 씬 3: 0막-1 처형의 밤 -->
 <div class="sc" id="s3">
-<div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:10%"></div></div><span class="progress-label">0막 · 어린 시절</span></div>
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:8%"></div></div><span class="prog-lbl">0막 · 아버지의 칼</span></div>
 <div class="scene-head">
-  <div class="scene-era">1356년 · 공민왕 5년 · 함경도 쌍성 · 열여섯</div>
-  <div class="scene-title">죽음이 가까운 세계 — 아버지의 동지들이 쓰러졌다</div>
+  <div class="scene-era">1356년 · 함경도 쌍성 · 너는 열여섯</div>
+  <div class="scene-title">처형의 밤</div>
 </div>
-<div class="art">
-  <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg">
-    <rect width="400" height="180" fill="#030406"/>
-    <rect x="0" y="0" width="400" height="100" fill="#040508"/>
-    <rect x="0" y="110" width="400" height="70" fill="#060402"/>
-    <path d="M0 110 L50 85 L90 98 L140 78 L190 93 L240 76 L290 90 L340 75 L400 86 L400 110Z" fill="#0a0a06"/>
-    <g stroke="#5080b0" stroke-width=".3" opacity=".2"><line x1="60" y1="0" x2="54" y2="55"/><line x1="140" y1="8" x2="134" y2="63"/><line x1="220" y1="0" x2="214" y2="58"/><line x1="300" y1="5" x2="294" y2="60"/><line x1="380" y1="0" x2="374" y2="55"/></g>
-    <circle cx="70" cy="106" r="2.5" fill="#c07010" opacity=".7"/>
-    <circle cx="105" cy="100" r="2" fill="#b06010" opacity=".5"/>
-    <circle cx="295" cy="104" r="2.5" fill="#c07010" opacity=".6"/>
-    <path d="M188 98 L192 78 L196 62 L200 46 L204 62 L208 78 L212 98Z" fill="#8a4020" opacity=".85"/>
-    <circle cx="200" cy="42" r="5" fill="#8a4020" opacity=".9"/>
-    <path d="M186 78 L180 88" stroke="#6a3010" stroke-width="1.2" fill="none"/>
-    <path d="M214 78 L220 88" stroke="#6a3010" stroke-width="1.2" fill="none"/>
-    <line x1="200" y1="24" x2="200" y2="42" stroke="#6a2808" stroke-width=".8"/>
-    <path d="M200 24 L212 29 L200 34Z" fill="#b02010" opacity=".85"/>
-    <text x="200" y="172" text-anchor="middle" fill="#181006" font-size="9" font-family="sans-serif">1356년 · 쌍성총관부 · 처형의 밤</text>
-  </svg>
-</div>
-<div class="narr">
+<div class="art"><svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#030406"/>
+  <rect x="0" y="0" width="400" height="110" fill="#040508"/>
+  <rect x="0" y="120" width="400" height="80" fill="#060402"/>
+  <path d="M0 120 L50 95 L90 108 L140 88 L190 103 L240 86 L290 100 L340 85 L400 96 L400 120Z" fill="#0a0a06"/>
+  <g stroke="#5080b0" stroke-width=".3" opacity=".2"><line x1="60" y1="0" x2="54" y2="60"/><line x1="140" y1="8" x2="134" y2="68"/><line x1="220" y1="0" x2="214" y2="62"/><line x1="300" y1="5" x2="294" y2="65"/><line x1="380" y1="0" x2="374" y2="58"/></g>
+  <line x1="80" y1="120" x2="80" y2="88" stroke="#4a2006" stroke-width="2"/>
+  <ellipse cx="80" cy="86" rx="5" ry="8" fill="#c05010" opacity=".8"/>
+  <ellipse cx="80" cy="83" rx="3" ry="5" fill="#f0a030" opacity=".9"/>
+  <line x1="320" y1="120" x2="320" y2="88" stroke="#4a2006" stroke-width="2"/>
+  <ellipse cx="320" cy="86" rx="5" ry="8" fill="#c05010" opacity=".8"/>
+  <ellipse cx="320" cy="83" rx="3" ry="5" fill="#f0a030" opacity=".9"/>
+  <circle cx="200" cy="148" r="7" fill="#0e0c08"/>
+  <rect x="193" y="155" width="14" height="22" fill="#0e0c08" rx="2"/>
+  <path d="M193 162 L182 174 M207 162 L218 174" stroke="#0e0c08" stroke-width="2.5" fill="none"/>
+  <text x="200" y="193" text-anchor="middle" fill="#181006" font-size="9" font-family="sans-serif">1356년 · 쌍성총관부 · 처형의 밤</text>
+</svg></div>
+<div class="narr-block">
   <div class="narr-who">너의 기억</div>
-  비가 왔다. 소리도 없이.<br>
-  너는 담장 뒤에 숨어 아버지를 봤다.<br><br>
-  아버지의 동지들이 하나씩 쓰러졌다. 원나라 병사들의 횃불. 진흙. 피.<br>
-  아버지는 움직이지 않았다. <em>그것이 더 무서웠다.</em>
+  <div class="narr-text" id="narr3"></div>
 </div>
-<div class="inner">이기지 못했지만 도망치지도 않은 얼굴.<br>너는 그 표정을 평생 기억하게 된다.</div>
-<div class="dial">
-  <div class="dial-who">아버지 · 이자춘 — 집으로 돌아오는 길</div>
-  <div class="dial-text">"성계야. 이기는 것이 전부가 아니다. 하지만 명분 없이는 이겨도 지는 것이다. 알겠느냐?"</div>
-</div>
-<div class="inner">너는 대답하지 못했다. 칼을 받아 들었다. 무거웠다.<br>네 것보다 훨씬 크다.</div>
-
-<div class="tracker" id="tr3">
-  <div class="tr-label">열여섯 너의 마음 — 세 가지를 모두 확인하세요</div>
-  <div class="tr-chips">
-    <span class="chip" id="chip3a">명분을 묻는다</span>
-    <span class="chip" id="chip3b">분노한다</span>
-    <span class="chip" id="chip3c">말하지 않는다</span>
-  </div>
-  <div class="tr-bar"><div class="tr-fill" id="fill3"></div></div>
-  <div class="tr-count" id="cnt3">0 / 3 확인됨</div>
-</div>
-<div class="ch-area">
-  <div class="badge-a">TYPE_A · 감정 선택 · 모두 정답</div>
-  <div class="ch-label">아버지가 칼을 건넨 그 밤 — 네 안에서 무엇이 남았나</div>
-  <div class="ch-note">세 가지를 모두 열어봐야 다음으로 넘어갈 수 있습니다</div>
-  <button class="ch" id="c3a" onclick="revA(3,'a','chip3a')"><span class="ch-n">①</span><span><strong style="color:#c8b060">명분을 묻는다</strong> — 아버지, 명분이란 무엇입니까?</span></button>
-  <button class="ch" id="c3b" onclick="revA(3,'b','chip3b')"><span class="ch-n">②</span><span><strong style="color:#d08060">분노한다</strong> — 아버지, 왜 싸우지 않으셨습니까?</span></button>
-  <button class="ch" id="c3c" onclick="revA(3,'c','chip3c')"><span class="ch-n">③</span><span><strong style="color:#90b878">말하지 않는다</strong> — 칼을 받아 들고 고개를 숙인다.</span></button>
-</div>
-<div class="ans" id="ans3a"><div class="ans-title">① 명분을 묻다</div><div class="ans-body">아버지는 오래 침묵했다. 그리고 말했다: "명분이란, 다른 사람들도 네 선택이 옳다고 느끼게 만드는 것이다. 그것이 없으면 이겨도 반드시 적이 생긴다." 너는 이 말을 32년 뒤 위화도에서 떠올리게 된다.</div></div>
-<div class="ans" id="ans3b"><div class="ans-title">② 분노가 터지다</div><div class="ans-body">아버지가 처음으로 버럭 화를 냈다: "싸우는 것이 능사가 아니다!" 그리고 돌아섰다. 그날 밤 너는 울지 않았다. 다짐했다 — 나는 절대로 지지 않겠다고. 그러나 아버지가 무엇을 가르치려 했는지는 아직 이해하지 못했다.</div></div>
-<div class="ans" id="ans3c"><div class="ans-title">③ 침묵 — 가장 깊은 대화</div><div class="ans-body">아버지가 너의 어깨를 한 번 쥐었다가 놓았다. 그것뿐이었다. 그러나 칼의 무게가 말했다 — 이제 네 차례다. 말하지 않았지만, 그 침묵 속에서 너는 무언가를 들었다.</div></div>
-<div class="summary" id="sum3">
-  <div class="sum-label">세 감정, 모두 이성계였다</div>
-  <div class="sum-body">명분을 묻는 것, 분노하는 것, 침묵하는 것 — 어느 것도 틀리지 않는다. 이성계는 이 세 가지를 모두 느꼈을 것이다. 어쩌면 셋이 동시에. 그가 특별한 것은 감정이 달라서가 아니라, 그 감정들을 32년 동안 어떻게 다뤘느냐에 있다.</div>
-</div>
-<div class="nav-area" id="nav3" style="display:none;">
-  <button class="btn-p" onclick="go(4)">다음 — 첫 전투 전야 →</button>
+<div class="nav-area" id="nav3a" style="display:none;">
+  <button class="btn-p" onclick="go(4)">계속 →</button>
 </div>
 </div>
 
-<!-- ████ 씬 4: 1막 — 첫 전투 전야 (TYPE_B) ████ -->
+<!-- ■ 씬 4: 0막-2 집으로 돌아오는 길 -->
 <div class="sc" id="s4">
-<div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div><span class="progress-label">1막 · 첫 전투</span></div>
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:12%"></div></div><span class="prog-lbl">0막 · 아버지의 칼</span></div>
+<div class="inner-block">
+  <div class="inner">이기지 못했지만 도망치지도 않은 얼굴.<br>너는 그 표정을 평생 기억하게 된다.</div>
+</div>
+<div class="dial-block">
+  <div class="dial">
+    <div class="dial-who">아버지 · 이자춘</div>
+    <div class="dial-text" id="dial4"></div>
+  </div>
+</div>
+<div class="narr-block" style="padding-top:0;">
+  <div class="narr-text" id="narr4"></div>
+</div>
+<div class="nav-area" id="nav4a" style="display:none;">
+  <button class="btn-p" onclick="go(5)">계속 →</button>
+</div>
+</div>
+
+<!-- ■ 씬 5: 0막-3 선택 -->
+<div class="sc" id="s5">
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:16%"></div></div><span class="prog-lbl">0막 · 아버지의 칼</span></div>
+<div class="tracker-block">
+  <div class="tracker" id="tr5">
+    <div class="tr-label">그 밤 네 안에 무엇이 남았나 — 세 가지를 모두 확인하세요</div>
+    <div class="tr-chips">
+      <span class="chip" id="chip5a">명분을 묻는다</span>
+      <span class="chip" id="chip5b">분노한다</span>
+      <span class="chip" id="chip5c">말하지 않는다</span>
+    </div>
+    <div class="tr-bar"><div class="tr-fill" id="fill5"></div></div>
+    <div class="tr-count" id="cnt5">0 / 3 확인됨</div>
+  </div>
+</div>
+<div class="ch-block">
+  <div class="badge-a">TYPE_A · 감정 선택 · 모두 정답</div>
+  <div class="ch-note">세 가지를 모두 열어봐야 다음으로 넘어갈 수 있습니다</div>
+  <button class="ch" id="c5a" onclick="revA(5,'a','chip5a')"><span class="ch-n">①</span><span><strong style="color:#c8b060">명분을 묻는다</strong> — 아버지, 명분이란 무엇입니까?</span></button>
+  <button class="ch" id="c5b" onclick="revA(5,'b','chip5b')"><span class="ch-n">②</span><span><strong style="color:#d08060">분노한다</strong> — 왜 싸우지 않으셨습니까?</span></button>
+  <button class="ch" id="c5c" onclick="revA(5,'c','chip5c')"><span class="ch-n">③</span><span><strong style="color:#90b878">말하지 않는다</strong> — 칼을 받아 들고 고개를 숙인다.</span></button>
+</div>
+<div class="ans" id="ans5a"><div class="ans-title">① 명분을 묻다</div><div class="ans-body">"명분이란, 다른 사람들도 네 선택이 옳다고 느끼게 만드는 것이다. 그것이 없으면 이겨도 반드시 적이 생긴다." 너는 이 말을 32년 뒤 위화도에서 떠올리게 된다.</div></div>
+<div class="ans" id="ans5b"><div class="ans-title">② 분노</div><div class="ans-body">아버지가 처음으로 버럭 화를 냈다. "싸우는 것이 능사가 아니다!" 그날 밤 너는 울지 않았다. 다짐했다 — 나는 절대로 지지 않겠다고.</div></div>
+<div class="ans" id="ans5c"><div class="ans-title">③ 침묵</div><div class="ans-body">아버지가 너의 어깨를 한 번 쥐었다가 놓았다. 칼의 무게가 말했다 — 이제 네 차례다.</div></div>
+<div class="summary" id="sum5">
+  <div class="sum-label">세 감정, 모두 이성계였다</div>
+  <div class="sum-body">명분을 묻는 것, 분노하는 것, 침묵하는 것 — 어느 것도 틀리지 않는다. 그가 특별한 것은 감정이 달라서가 아니라, 그 감정들을 32년 동안 어떻게 다뤘느냐에 있다.</div>
+</div>
+<div class="nav-area" id="nav5" style="display:none;">
+  <button class="btn-p" onclick="go(6)">다음 — 첫 전투 →</button>
+</div>
+</div>
+
+<!-- ■ 씬 6: 1막-1 홍건적 전야 -->
+<div class="sc" id="s6">
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:24%"></div></div><span class="prog-lbl">1막 · 첫 전투</span></div>
 <div class="scene-head">
-  <div class="scene-era">1361년 · 공민왕 10년 · 함경도 · 스물여섯</div>
-  <div class="scene-title">처음으로 독립 지휘관이 됐다 — 홍건적 5천이 온다</div>
+  <div class="scene-era">1361년 · 공민왕 10년 · 스물여섯</div>
+  <div class="scene-title">처음으로 명령을 내려야 한다</div>
 </div>
-<div class="art">
-  <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg">
-    <rect width="400" height="180" fill="#040306"/>
-    <rect x="0" y="0" width="400" height="95" fill="#050408"/>
-    <rect x="0" y="110" width="400" height="70" fill="#050402"/>
-    <path d="M0 110 L60 82 L110 96 L170 74 L230 90 L290 72 L350 86 L400 74 L400 110Z" fill="#0c0a06"/>
-    <circle cx="300" cy="32" r="20" fill="#0a0804" opacity=".9"/>
-    <circle cx="300" cy="32" r="14" fill="#c89010" opacity=".12"/>
-    <g fill="#c09010" opacity=".7"><circle cx="60" cy="108" r="2"/><circle cx="100" cy="104" r="1.5"/><circle cx="300" cy="106" r="2"/><circle cx="340" cy="109" r="1.5"/></g>
-    <path d="M186 98 L190 78 L193 60 L196 78 L200 98Z" fill="#304828" opacity=".85"/>
-    <circle cx="193" cy="56" r="4" fill="#304828" opacity=".9"/>
-    <text x="200" y="172" text-anchor="middle" fill="#150c04" font-size="9" font-family="sans-serif">1361년 · 새벽 · 홍건적 진영의 불빛</text>
-  </svg>
+<div class="art"><svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#020304"/>
+  <rect x="0" y="0" width="400" height="200" fill="#030408"/>
+  <path d="M0 120 L60 92 L110 106 L170 84 L230 100 L290 82 L350 96 L400 84 L400 120Z" fill="#0c0a06"/>
+  <rect x="0" y="120" width="400" height="80" fill="#060402"/>
+  <!-- 병사들 무릎 꿇은 실루엣 -->
+  <g fill="#0e0c08">
+    <circle cx="200" cy="158" r="5"/><path d="M196 163 L196 175 Q200 178 204 175 L204 163Z"/><ellipse cx="200" cy="177" rx="9" ry="4"/>
+    <circle cx="160" cy="162" r="4.5"/><path d="M156 167 L156 178 Q160 181 164 178 L164 167Z"/><ellipse cx="160" cy="180" rx="8" ry="3.5"/>
+    <circle cx="240" cy="162" r="4.5"/><path d="M236 167 L236 178 Q240 181 244 178 L244 167Z"/><ellipse cx="240" cy="180" rx="8" ry="3.5"/>
+    <circle cx="120" cy="167" r="4"/><ellipse cx="120" cy="179" rx="7" ry="3"/>
+    <circle cx="280" cy="167" r="4"/><ellipse cx="280" cy="179" rx="7" ry="3"/>
+    <circle cx="80" cy="172" r="3.5"/><ellipse cx="80" cy="183" rx="6" ry="3"/>
+    <circle cx="320" cy="172" r="3.5"/><ellipse cx="320" cy="183" rx="6" ry="3"/>
+    <circle cx="40" cy="177" r="3"/><ellipse cx="40" cy="187" rx="5" ry="2.5"/>
+    <circle cx="360" cy="177" r="3"/><ellipse cx="360" cy="187" rx="5" ry="2.5"/>
+  </g>
+  <!-- 이성계 서있음 -->
+  <circle cx="200" cy="126" r="7" fill="#1e1810"/>
+  <rect x="193" y="133" width="14" height="22" fill="#1e1810" rx="2"/>
+  <path d="M193 140 L183 152 M207 140 L217 152" stroke="#1e1810" stroke-width="2.5" fill="none"/>
+  <line x1="200" y1="104" x2="200" y2="126" stroke="#4a2808" stroke-width="1.5"/>
+  <polygon points="200,102 213,108 200,114" fill="#901818" opacity=".9"/>
+  <!-- 원거리 홍건적 불빛 -->
+  <g fill="#c05010" opacity=".2"><circle cx="50" cy="60" r="4"/><circle cx="150" cy="48" r="3"/><circle cx="280" cy="55" r="4"/><circle cx="370" cy="50" r="3"/></g>
+  <text x="200" y="194" text-anchor="middle" fill="#0e0c06" font-size="9" font-family="sans-serif">1361년 새벽 · 2천의 병사들이 나를 올려다본다</text>
+</svg></div>
+<div class="narr-block">
+  <div class="narr-who">새벽 · 강가</div>
+  <div class="narr-text" id="narr6"></div>
 </div>
-<div class="narr">
-  <div class="narr-who">새벽 · 강가 혼자</div>
-  처음이다. 명령을 받은 것이 아니라, 내가 명령을 내려야 한다.<br><br>
-  척후가 돌아왔다. 홍건적 선봉이 예상보다 세 배 많다. <em>5천이 넘는다.</em><br>
-  우리는 2천. 날이 밝기 직전이다.
+<div class="nav-area" id="nav6a" style="display:none;">
+  <button class="btn-p" onclick="go(7)">계속 →</button>
 </div>
-<div class="inner">아버지라면 어떻게 했을까. 아버지는 없다.<br>2천 명이 자고 있다. 내일 아침, 저 불빛을 향해 가야 한다.</div>
-<div class="dial">
-  <div class="dial-who">척후병</div>
-  <div class="dial-text">"장군. 아군 2천으로는 정면 충돌이 불가능합니다. 후퇴하거나, 지원군을 기다리거나 — 선택하셔야 합니다."</div>
 </div>
-<div class="inner">뒤에서 개경이 불타고 있다. 지원군은 사흘 후에나 온다.<br>3일이면 홍건적이 고려 중부를 뚫는다.</div>
-<div class="ch-area">
+
+<!-- ■ 씬 7: 1막-2 척후 보고 + 선택 -->
+<div class="sc" id="s7">
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:30%"></div></div><span class="prog-lbl">1막 · 첫 전투</span></div>
+<div class="inner-block">
+  <div class="inner">아버지라면 어떻게 했을까.<br>아버지는 없다.</div>
+</div>
+<div class="dial-block">
+  <div class="dial">
+    <div class="dial-who">척후병</div>
+    <div class="dial-text">"장군. 홍건적 선봉이 예상보다 세 배 많습니다. 5천이 넘습니다. 후퇴하거나, 지원군을 기다리거나 — 선택하셔야 합니다."</div>
+  </div>
+</div>
+<div class="inner-block">
+  <div class="inner">지원군은 사흘 후. 3일이면 홍건적이 고려 중부를 뚫는다.</div>
+</div>
+<div class="ch-block">
   <div class="badge-b">TYPE_B · 전략 선택</div>
   <div class="ch-label">너의 선택은</div>
-  <button class="ch" id="c4a" onclick="pickB(4,'a','bad','r4a')"><span class="ch-n">①</span><span>후퇴한다 — 살아남아야 다음 싸움이 있다.</span></button>
-  <button class="ch" id="c4b" onclick="pickB(4,'b','good','r4b')"><span class="ch-n">②</span><span>야간 기습을 감행한다 — 숫자가 아니라 기습이 전부다.</span></button>
-  <button class="ch" id="c4c" onclick="pickB(4,'c','neutral','r4c')"><span class="ch-n">③</span><span>지원군을 기다린다 — 혼자 결정할 수 없다.</span></button>
+  <button class="ch" id="c7a" onclick="pickB(7,'a','bad','r7a')"><span class="ch-n">①</span><span>후퇴한다 — 살아남아야 다음 싸움이 있다.</span></button>
+  <button class="ch" id="c7b" onclick="pickB(7,'b','good','r7b')"><span class="ch-n">②</span><span>야간 기습 — 숫자가 아니라 기습이 전부다.</span></button>
+  <button class="ch" id="c7c" onclick="pickB(7,'c','neutral','r7c')"><span class="ch-n">③</span><span>지원군을 기다린다.</span></button>
 </div>
-<div class="res bad" id="r4a">
-  <div class="res-title">후퇴 — 현명하지만 그 대가는</div>
-  <div class="res-body">살아남았다. 그러나 그 사이 홍건적이 전진했고, 3개 고을이 약탈당했다. 살아남은 것이 옳은 것인지 — 모르겠다. 장수의 도리는 살아남는 것만이 아니다.</div>
-  <div class="res-nav"><button class="btn-s" onclick="resetB(4)">↩ 다시 고르기</button> <button class="btn-p" onclick="go(5)" style="margin-left:6px;">그래도 다음 →</button></div>
+<div class="res bad" id="r7a"><div class="res-title">후퇴</div><div class="res-body">살아남았다. 그러나 그 사이 3개 고을이 약탈당했다. 장수의 도리는 살아남는 것만이 아니다.</div><div class="res-nav"><button class="btn-s" onclick="resetB(7)">↩ 다시</button> <button class="btn-p" onclick="go(8)" style="margin-left:6px;">그래도 다음 →</button></div></div>
+<div class="res good" id="r7b"><div class="res-title">야간 기습 — 이성계의 선택</div><div class="res-body">새벽 3시. 홍건적 진영이 잠든 사이 달려들었다. 홍건적은 규모를 가늠하지 못하고 무너졌다. 이지란이 웃으며 말했다: "우리가 이겼습니다."</div><div class="res-nav"><button class="btn-p" onclick="go(8)">다음 — 황산대첩 →</button></div></div>
+<div class="res neutral" id="r7c"><div class="res-title">기다림</div><div class="res-body">지원군이 왔을 때 홍건적은 이미 방어진을 쳤다. 전투는 두 배로 길어졌다.</div><div class="res-nav"><button class="btn-s" onclick="resetB(7)">↩ 다시</button> <button class="btn-p" onclick="go(8)" style="margin-left:6px;">다음 →</button></div></div>
 </div>
-<div class="res good" id="r4b">
-  <div class="res-title">야간 기습 — 이성계의 선택</div>
-  <div class="res-body">새벽 3시. 홍건적 진영이 잠든 사이 기습했다. 2천 명이 함성을 지르며 달려들었다. 홍건적은 규모를 가늠하지 못하고 혼란에 빠졌다. 선봉대가 무너지고 본대가 후퇴했다. 이날의 전과가 이성계를 전국에 알렸다. 그리고 이지란이 웃으며 말했다: "우리가 이겼습니다."</div>
-  <div class="res-nav"><button class="btn-p" onclick="go(5)">다음 — 황산대첩 →</button></div>
+
+<!-- ■ 씬 8: 2막-1 황산 전야 -->
+<div class="sc" id="s8">
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:38%"></div></div><span class="prog-lbl">2막 · 황산대첩</span></div>
+<div class="scene-head">
+  <div class="scene-era">1380년 · 전라도 황산 · 마흔다섯</div>
+  <div class="scene-title">아기발도 — 화살도 통하지 않는다</div>
 </div>
-<div class="res neutral" id="r4c">
-  <div class="res-title">기다림 — 때로는 신중함이 필요하다</div>
-  <div class="res-body">사흘을 기다렸다. 지원군이 왔을 때 홍건적은 이미 방어진을 쳤다. 전투는 두 배로 길어졌다. 지원군 장수가 말했다: "처음부터 쳤으면 됐을 것을." 그 말이 오래 남았다.</div>
-  <div class="res-nav"><button class="btn-s" onclick="resetB(4)">↩ 다시</button> <button class="btn-p" onclick="go(5)" style="margin-left:6px;">다음으로 →</button></div>
+<div class="art"><svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#060202"/>
+  <rect x="0" y="0" width="400" height="95" fill="#080402"/>
+  <rect x="0" y="108" width="400" height="92" fill="#060402"/>
+  <path d="M0 108 L50 82 L100 96 L160 74 L220 90 L280 72 L340 86 L400 72 L400 108Z" fill="#100c06"/>
+  <circle cx="200" cy="38" r="32" fill="#c85010" opacity=".15"/>
+  <g fill="#e06020" opacity=".45"><rect x="80" y="97" width="2.5" height="18"/><rect x="140" y="91" width="2.5" height="20"/><rect x="200" y="85" width="2.5" height="28"/><rect x="260" y="93" width="2.5" height="18"/><rect x="320" y="95" width="2.5" height="16"/></g>
+  <!-- 아기발도 황금 투구 -->
+  <ellipse cx="200" cy="130" rx="16" ry="14" fill="#1a1406"/>
+  <ellipse cx="200" cy="126" rx="16" ry="12" fill="#c0900a" opacity=".8"/>
+  <ellipse cx="200" cy="123" rx="13" ry="9" fill="#d8a820" opacity=".7"/>
+  <rect x="184" y="140" width="32" height="20" fill="#1a1406" rx="2"/>
+  <text x="200" y="194" text-anchor="middle" fill="#2a0e04" font-size="9" font-family="sans-serif">1380년 · 황산 · 황금 투구의 아기발도</text>
+</svg></div>
+<div class="narr-block">
+  <div class="narr-who">전투 전</div>
+  <div class="narr-text" id="narr8"></div>
+</div>
+<div class="nav-area" id="nav8a" style="display:none;">
+  <button class="btn-p" onclick="go(9)">계속 →</button>
 </div>
 </div>
 
-<!-- ████ 씬 5: 2막 — 황산대첩 (TYPE_B) ████ -->
-<div class="sc" id="s5">
-<div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div><span class="progress-label">2막 · 황산대첩</span></div>
-<div class="scene-head">
-  <div class="scene-era">1380년 · 우왕 6년 · 전라도 황산 · 마흔다섯</div>
-  <div class="scene-title">아기발도 — 한 번도 진 적 없는 적장</div>
+<!-- ■ 씬 9: 2막-2 이지란 + 선택 -->
+<div class="sc" id="s9">
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:44%"></div></div><span class="prog-lbl">2막 · 황산대첩</span></div>
+<div class="inner-block">
+  <div class="inner">투구 아래를 맞히면 된다.<br>그 거리는 — 너도 자신 없는 거리다.</div>
 </div>
-<div class="art">
-  <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg">
-    <rect width="400" height="180" fill="#060302"/>
-    <rect x="0" y="0" width="400" height="90" fill="#080402"/>
-    <rect x="0" y="105" width="400" height="75" fill="#060402"/>
-    <path d="M0 105 L50 78 L100 92 L160 70 L220 86 L280 68 L340 82 L400 68 L400 105Z" fill="#100c06"/>
-    <circle cx="200" cy="38" r="32" fill="#c85010" opacity=".18"/>
-    <circle cx="200" cy="38" r="20" fill="#e07020" opacity=".1"/>
-    <g fill="#e06020" opacity=".5"><rect x="80" y="94" width="2.5" height="18"/><rect x="140" y="88" width="2.5" height="20"/><rect x="200" y="82" width="2.5" height="28"/><rect x="260" y="90" width="2.5" height="18"/><rect x="320" y="92" width="2.5" height="16"/></g>
-    <text x="200" y="172" text-anchor="middle" fill="#2a0e04" font-size="9" font-family="sans-serif">1380년 · 황산 · 왜구 10만 대 아군 5천</text>
-  </svg>
+<div class="dial-block">
+  <div class="dial">
+    <div class="dial-who">이지란 · 30년 전우</div>
+    <div class="dial-text">"장군, 저 자가 쓰러지면 왜구 진영이 흔들립니다. 제가 투구를 맞히겠습니다. 그 순간 장군이 쏘십시오."</div>
+  </div>
 </div>
-<div class="narr">
-  <div class="narr-who">전투 전</div>
-  왜구 10만. 아군 5천. 그리고 왜구의 전설적 장수 아기발도.<br>
-  황금빛 투구. 화살도 통하지 않는다는 소문.<br><br>
-  아기발도가 선두에 나타났다. <em>병사들이 흔들리는 게 느껴진다.</em>
-</div>
-<div class="inner">5천 대 10만. 계산이 맞지 않는다.<br>그러나 이겨야 한다. 이기지 못하면 고려 남부는 없다.</div>
-<div class="dial">
-  <div class="dial-who">이지란 · 30년 전우</div>
-  <div class="dial-text">"장군, 저 자를 먼저 잡아야 합니다. 저 자가 쓰러지면 왜구 진영이 흔들립니다. 그런데 저 자는 화살을 맞아도 쓰러지지 않습니다."</div>
-</div>
-<div class="inner">투구 아래를 맞히면 된다. 그 거리는 — 너도 자신 없는 거리다.<br>이지란이 옆에 있다.</div>
-<div class="ch-area">
+<div class="ch-block">
   <div class="badge-b">TYPE_B · 전략 선택</div>
   <div class="ch-label">아기발도를 어떻게 상대하나</div>
-  <button class="ch" id="c5a" onclick="pickB(5,'a','bad','r5a')"><span class="ch-n">①</span><span>내가 직접 쏜다 — 실패하면 사기가 무너진다.</span></button>
-  <button class="ch" id="c5b" onclick="pickB(5,'b','good','r5b')"><span class="ch-n">②</span><span>이지란과 함께 — 그가 투구를 맞히고, 내가 그 순간 쏜다.</span></button>
-  <button class="ch" id="c5c" onclick="pickB(5,'c','neutral','r5c')"><span class="ch-n">③</span><span>측면 공략 — 아기발도를 피해 측면으로 돌파한다.</span></button>
+  <button class="ch" id="c9a" onclick="pickB(9,'a','bad','r9a')"><span class="ch-n">①</span><span>내가 직접 쏜다.</span></button>
+  <button class="ch" id="c9b" onclick="pickB(9,'b','good','r9b')"><span class="ch-n">②</span><span>이지란과 함께 — 2단 공격.</span></button>
+  <button class="ch" id="c9c" onclick="pickB(9,'c','neutral','r9c')"><span class="ch-n">③</span><span>측면으로 돌파한다.</span></button>
 </div>
-<div class="res bad" id="r5a">
-  <div class="res-title">혼자 쏜다 — 실패의 대가</div>
-  <div class="res-body">화살이 투구를 맞히고 빗나갔다. 병사들 사이에서 탄식이 터졌다. "장군도 못 쓰러뜨린다!" 혼자 영웅이 되려다 군대를 흔들었다.</div>
-  <div class="res-nav"><button class="btn-s" onclick="resetB(5)">↩ 다시</button></div>
+<div class="res bad" id="r9a"><div class="res-title">혼자 쏜다 — 실패</div><div class="res-body">화살이 빗나갔다. 병사들 사이에서 탄식이 터졌다. 혼자 영웅이 되려다 군대를 흔들었다.</div><div class="res-nav"><button class="btn-s" onclick="resetB(9)">↩ 다시</button></div></div>
+<div class="res good" id="r9b"><div class="res-title">황산대첩</div><div class="res-body">이지란의 화살이 투구 끈을 끊었다. 그 순간 이성계의 화살이 날아갔다. 아기발도가 쓰러졌다. 왜구 진영이 무너졌다. 혼자 이기려 하지 않았다 — 그래서 영웅이 됐다.</div><div class="res-nav"><button class="btn-p" onclick="go(10)">다음 — 출정 명령 →</button></div></div>
+<div class="res neutral" id="r9c"><div class="res-title">측면 공략</div><div class="res-body">적장이 살아있는 한 왜구의 사기는 꺾이지 않았다. 결국 아기발도를 제거하지 않고는 이길 수 없었다.</div><div class="res-nav"><button class="btn-s" onclick="resetB(9)">↩ 다시</button> <button class="btn-p" onclick="go(10)" style="margin-left:6px;">다음 →</button></div></div>
 </div>
-<div class="res good" id="r5b">
-  <div class="res-title">이지란과 함께 — 황산대첩</div>
-  <div class="res-body">이지란의 화살이 투구 끈을 끊었다. 투구가 벗겨지는 순간, 이성계의 화살이 날아갔다. 아기발도가 쓰러졌다. 왜구 진영이 무너졌다. 황산대첩. 혼자 영웅이 되려 하지 않았다 — 그래서 영웅이 됐다.</div>
-  <div class="res-nav"><button class="btn-p" onclick="go(6)">다음 — 출정 명령 →</button></div>
+
+<!-- ■ 씬 10: 3막-1 출정 명령 상황 -->
+<div class="sc" id="s10">
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:52%"></div></div><span class="prog-lbl">3막 · 출정 명령</span></div>
+<div class="scene-head">
+  <div class="scene-era">1388년 봄 · 개경 조정</div>
+  <div class="scene-title">왕명이 내려왔다</div>
 </div>
-<div class="res neutral" id="r5c">
-  <div class="res-title">측면 공략 — 적장이 살아있는 한</div>
-  <div class="res-body">영리한 선택이었다. 그러나 아기발도가 살아있는 한 왜구의 사기는 꺾이지 않았다. 전투는 길어졌다. 결국 아기발도를 제거하지 않고는 이길 수 없었다.</div>
-  <div class="res-nav"><button class="btn-s" onclick="resetB(5)">↩ 다시</button> <button class="btn-p" onclick="go(6)" style="margin-left:6px;">다음으로 →</button></div>
+<div class="narr-block">
+  <div class="narr-who">상황</div>
+  <div class="narr-text" id="narr10"></div>
+</div>
+<div class="nav-area" id="nav10a" style="display:none;">
+  <button class="btn-p" onclick="go(11)">계속 →</button>
 </div>
 </div>
 
-<!-- ████ 씬 6: 3막 — 출정 명령 (TYPE_B + 정보 탐색) ████ -->
-<div class="sc" id="s6">
-<div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:55%"></div></div><span class="progress-label">3막 · 출정 명령</span></div>
-<div class="scene-head">
-  <div class="scene-era">1388년 봄 · 우왕 14년 · 개경 조정</div>
-  <div class="scene-title">왕명이 내려왔다 — 명나라를 치라</div>
-</div>
-<div class="narr">
-  <div class="narr-who">상황</div>
-  명나라가 고려 북쪽 땅을 내놓으라 통보했다. 최영 장군이 격노했다.<br>
-  우왕이 결정했다: 요동 정벌. 지휘관은 이성계. <strong>병사 4만 8천.</strong>
-</div>
-<div class="fact">
-  <div class="fact-label">반드시 알아야 할 것들</div>
-  <div class="fact-text">
-    지금은 <strong>농번기 음력 4월</strong>. 병사 대부분이 농민이다. 지금 출정하면 고향의 논에 모가 심어지지 않는다.<br><br>
-    압록강은 <strong>4~5월 매년 범람</strong>한다. 4만 8천이 건너려면 배 수백 척이 필요하다. 그 배가 없다.<br><br>
-    명나라 군사는 <strong>100만</strong>. 원나라를 몰아낸 나라다. 4만 8천으로 치는 것은 무엇인가.
+<!-- ■ 씬 11: 3막-2 사실 + 내면 + 선택 -->
+<div class="sc" id="s11">
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:57%"></div></div><span class="prog-lbl">3막 · 출정 명령</span></div>
+<div class="fact-block">
+  <div class="fact">
+    <div class="fact-label">반드시 알아야 할 것들</div>
+    <div class="fact-text">농번기 음력 4월. 병사 대부분이 농민이다.<br><br>압록강은 지금 범람 중이다. 4만 8천이 건너려면 배가 없다.<br><br>명나라 군사는 100만. 4만 8천으로 치는 것은 무엇인가.</div>
   </div>
 </div>
-<div class="dial">
-  <div class="dial-who">최영 장군</div>
-  <div class="dial-text">"이성계 장군. 왕명이오. 이의 없으시겠지요?"</div>
+<div class="dial-block">
+  <div class="dial">
+    <div class="dial-who">최영 장군</div>
+    <div class="dial-text">"이성계 장군. 왕명이오. 이의 없으시겠지요?"</div>
+  </div>
 </div>
-<div class="inner">함정이다. 그러나 왕명이다. 거역하면 반역이다.<br>아버지의 목소리: "명분 없이 칼을 들지 말라."<br>그러나 지금은 칼을 들지 않는 것이 더 위험하다.</div>
-<div class="insight">
-  <div class="ins-label">역사 너머의 통찰</div>
-  <div class="ins-text">서울에서 함경도까지 걸어가봤어? 지도 위의 한 뼘이다. 그러나 4만 8천 명이 비를 맞으며 행군한다는 건 — 매일 수십 명이 병들고 탈영하고 쓰러진다는 뜻이다. 전쟁은 지도 위에서 일어나지 않는다.</div>
+<div class="inner-block">
+  <div class="inner">함정이다.<br>그러나 왕명이다.<br>거역하면 반역이다.</div>
 </div>
-<div class="ch-area">
+<div class="ch-block">
   <div class="badge-b">TYPE_B · 전략 선택</div>
   <div class="ch-label">최영에게 무엇을 말하나</div>
-  <button class="ch" id="c6a" onclick="pickB(6,'a','bad','r6a')"><span class="ch-n">①</span><span>공개적으로 거부한다 — 이 전쟁은 불가능하다고 밝힌다.</span></button>
-  <button class="ch" id="c6b" onclick="pickB(6,'b','neutral','r6b')"><span class="ch-n">②</span><span>그냥 따른다 — 일단 출정하고 가면서 방법을 찾는다.</span></button>
-  <button class="ch" id="c6c" onclick="pickB(6,'c','good','r6c')"><span class="ch-n">③</span><span>수락하되 반대 의사를 문서로 남긴다 — 출정은 하되 기록에 남긴다.</span></button>
+  <button class="ch" id="c11a" onclick="pickB(11,'a','neutral','r11a')"><span class="ch-n">①</span><span>공개적으로 거부한다.</span></button>
+  <button class="ch" id="c11b" onclick="pickB(11,'b','bad','r11b')"><span class="ch-n">②</span><span>그냥 따른다.</span></button>
+  <button class="ch" id="c11c" onclick="pickB(11,'c','good','r11c')"><span class="ch-n">③</span><span>수락하되 반대 의사를 문서로 남긴다.</span></button>
 </div>
-<div class="res neutral" id="r6a">
-  <div class="res-title">공개 거부 — 용기 있는 선택, 그러나</div>
-  <div class="res-body">이성계는 실제로 사불가론(四不可論)을 올렸다: 소국이 대국을 칠 수 없음, 농번기, 왜구 침입 위험, 장마철. 그러나 우왕과 최영은 묵살했다. 공개 거부만으로는 아무것도 바뀌지 않았다. 단, 그 기록이 나중에 중요해진다.</div>
-  <div class="res-nav"><button class="btn-s" onclick="resetB(6)">↩ 다시</button> <button class="btn-p" onclick="go(7)" style="margin-left:6px;">다음으로 →</button></div>
+<div class="res neutral" id="r11a"><div class="res-title">공개 거부</div><div class="res-body">사불가론(四不可論)을 올렸다. 그러나 우왕과 최영은 묵살했다. 그 기록은 나중에 중요해진다.</div><div class="res-nav"><button class="btn-s" onclick="resetB(11)">↩ 다시</button> <button class="btn-p" onclick="go(12)" style="margin-left:6px;">다음 →</button></div></div>
+<div class="res bad" id="r11b"><div class="res-title">묵묵히 따름</div><div class="res-body">명분도 기록도 없이 출발했다. 위화도에서 회군을 결정했을 때, "당신은 처음부터 반대도 하지 않았다. 이것은 순수한 반역이다." 반박할 것이 없었다.</div><div class="res-nav"><button class="btn-s" onclick="resetB(11)">↩ 다시</button></div></div>
+<div class="res good" id="r11c"><div class="res-title">이것이 이성계의 실제 선택</div><div class="res-body">출정에 응하면서 반대 이유를 상소로 올려 기록에 남겼다. 이 문서가 위화도 회군의 명분이 됐다.</div><div class="res-nav"><button class="btn-p" onclick="go(12)">다음 — 위화도 →</button></div></div>
 </div>
-<div class="res bad" id="r6b">
-  <div class="res-title">묵묵히 따름 — 명분도 기록도 없이</div>
-  <div class="res-body">명분도 기록도 없이 출발했다. 위화도에서 회군을 결정했을 때, 최영이 말했다: "당신은 처음부터 반대도 하지 않았다. 이것은 순수한 반역이다." 반박할 것이 없었다.</div>
-  <div class="res-nav"><button class="btn-s" onclick="resetB(6)">↩ 다시</button></div>
+
+<!-- ■ 씬 12: 4막-1 위화도 상황 -->
+<div class="sc" id="s12">
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:65%"></div></div><span class="prog-lbl">4막 · 위화도</span></div>
+<div class="scene-head">
+  <div class="scene-era">1388년 음력 5월 · 위화도</div>
+  <div class="scene-title">열흘째 비가 온다</div>
 </div>
-<div class="res good" id="r6c">
-  <div class="res-title">이것이 이성계의 실제 선택</div>
-  <div class="res-body">출정에 응하면서 동시에 반대 이유(사불가론)를 상소로 올려 기록에 남겼다. 왕명을 어기지 않았다. 그러나 반대 의사도 숨기지 않았다. 이 문서가 위화도 회군의 명분이 됐다 — "나는 처음부터 이 전쟁이 불가능하다고 말했다."</div>
-  <div class="res-nav"><button class="btn-p" onclick="go(7)">다음 — 위화도 →</button></div>
+<div class="art"><svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#020408"/>
+  <rect x="0" y="0" width="400" height="110" fill="#03050e"/>
+  <ellipse cx="100" cy="30" rx="90" ry="28" fill="#060a12" opacity=".95"/>
+  <ellipse cx="280" cy="22" rx="120" ry="30" fill="#050810" opacity=".95"/>
+  <path d="M0 110 Q60 97 120 112 Q180 126 240 106 Q300 88 360 108 L400 112 L400 125 Q360 120 300 104 Q240 86 180 108 Q120 126 60 114 L0 120Z" fill="#04180a"/>
+  <path d="M0 125 Q80 112 160 128 Q240 144 320 120 L400 134 L400 145 Q320 148 240 130 Q160 110 80 136 L0 148Z" fill="#061e0c" opacity=".7"/>
+  <ellipse cx="200" cy="162" rx="150" ry="35" fill="#0a0c06"/>
+  <g stroke="#3060a0" stroke-width=".4" opacity=".3"><line x1="60" y1="0" x2="54" y2="65"/><line x1="140" y1="10" x2="134" y2="75"/><line x1="220" y1="0" x2="214" y2="68"/><line x1="300" y1="5" x2="294" y2="70"/><line x1="380" y1="0" x2="374" y2="65"/><line x1="100" y1="22" x2="94" y2="82"/><line x1="260" y1="15" x2="254" y2="78"/></g>
+  <circle cx="200" cy="144" r="7" fill="#101408"/>
+  <rect x="193" y="151" width="14" height="22" fill="#101408" rx="2"/>
+  <path d="M193 158 L183 170 M207 158 L217 170" stroke="#101408" stroke-width="2.5" fill="none"/>
+  <line x1="200" y1="120" x2="200" y2="144" stroke="#3a2808" stroke-width="1.2"/>
+  <path d="M200 120 Q214 126 200 132" fill="none" stroke="#701010" stroke-width="1.5"/>
+  <text x="200" y="194" text-anchor="middle" fill="#06120a" font-size="9" font-family="sans-serif">1388년 음력 5월 · 위화도 · 강이 넘친다</text>
+</svg></div>
+<div class="narr-block">
+  <div class="narr-who">위화도</div>
+  <div class="narr-text" id="narr12"></div>
+</div>
+<div class="nav-area" id="nav12a" style="display:none;">
+  <button class="btn-p" onclick="go(13)">계속 →</button>
 </div>
 </div>
 
-<!-- ████ 씬 7: 4막 — 위화도 결단 (TYPE_B) ████ -->
-<div class="sc" id="s7">
-<div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div><span class="progress-label">4막 · 위화도</span></div>
-<div class="scene-head">
-  <div class="scene-era">1388년 음력 5월 · 위화도 · 압록강 범람</div>
-  <div class="scene-title">강이 넘친다. 군대가 썩어간다.</div>
+<!-- ■ 씬 13: 4막-2 조민수 + 결단 -->
+<div class="sc" id="s13">
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:72%"></div></div><span class="prog-lbl">4막 · 위화도</span></div>
+<div class="dial-block">
+  <div class="dial">
+    <div class="dial-who">부장 조민수</div>
+    <div class="dial-text">"장군. 오늘 아침 열두 명이 강에 빠졌습니다. 셋은 건지지 못했습니다. 이대로 진격하면 — 강을 건너기도 전에 우리가 먼저 죽습니다."</div>
+  </div>
 </div>
-<div class="art">
-  <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg">
-    <rect width="400" height="180" fill="#020508"/>
-    <rect x="0" y="0" width="400" height="100" fill="#030610"/>
-    <rect x="0" y="115" width="400" height="65" fill="#020a06"/>
-    <path d="M0 115 Q60 102 120 116 Q180 130 240 110 Q300 90 360 114 L400 118 L400 128 Q360 124 300 106 Q240 88 180 110 Q120 128 60 115 L0 124Z" fill="#041808" opacity=".9"/>
-    <path d="M0 128 Q80 115 160 130 Q240 145 320 120 L400 134 L400 145 Q320 148 240 132 Q160 116 80 138 L0 148Z" fill="#061e0c" opacity=".7"/>
-    <rect x="0" y="0" width="400" height="100" fill="#02050e" opacity=".5"/>
-    <g stroke="#4080b0" stroke-width=".4" opacity=".3"><line x1="60" y1="0" x2="54" y2="60"/><line x1="140" y1="10" x2="134" y2="70"/><line x1="220" y1="0" x2="214" y2="65"/><line x1="300" y1="5" x2="294" y2="68"/><line x1="380" y1="0" x2="374" y2="62"/><line x1="100" y1="22" x2="94" y2="78"/><line x1="260" y1="15" x2="254" y2="75"/></g>
-    <path d="M0 100 L50 78 L90 92 L140 72 L190 88 L240 70 L290 84 L340 68 L400 78 L400 100Z" fill="#0a1008"/>
-    <path d="M188 98 L192 78 L196 60 L200 44 L204 60 L208 78 L212 98Z" fill="#1a3820" opacity=".8"/>
-    <circle cx="200" cy="40" r="4.5" fill="#1a3820" opacity=".85"/>
-    <line x1="200" y1="24" x2="200" y2="40" stroke="#102810" stroke-width=".8"/>
-    <path d="M200 24 L212 28 L200 32Z" fill="#902010" opacity=".8"/>
-    <g opacity=".4" fill="#5090c0"><circle cx="80" cy="106" r="1.5"/><circle cx="150" cy="100" r="1"/><circle cx="250" cy="104" r="1.5"/><circle cx="320" cy="100" r="1"/></g>
-    <text x="200" y="172" text-anchor="middle" fill="#06120a" font-size="9" font-family="sans-serif">1388년 음력 5월 · 위화도 · 압록강 범람 중</text>
-  </svg>
+<div class="inner-block">
+  <div class="inner">4만 8천 명이 저것을 건너면 몇 명이 살아서 건너겠는가.<br>그리고 건너도. 명나라 100만이 기다린다.<br><br>아버지의 목소리: "명분 없이는 이겨도 지는 것이다."</div>
 </div>
-<div class="narr">
-  <div class="narr-who">위화도 · 열흘째 비</div>
-  열흘째 비가 온다. 압록강이 범람해 위화도는 섬이 됐다.<br>
-  식량은 열흘치. 병자는 3천. 탈영병은 셀 수 없다.<br><br>
-  개경에서 최영의 명령이 왔다: <strong>"즉시 진격하라."</strong>
+<div class="warn-block">
+  <div class="warn">※ 역사 기록에 따르면 이성계는 이 시점에 이미 결단을 내렸습니다.</div>
 </div>
-<div class="dial">
-  <div class="dial-who">부장 조민수 · 새벽 막사 안</div>
-  <div class="dial-text">"장군. 오늘 아침 열두 명이 강에 빠졌습니다. 셋은 건지지 못했습니다. 이대로 진격하면 — 강을 건너기도 전에 우리가 먼저 죽습니다."</div>
-</div>
-<div class="inner">너는 강을 봤다. 4만 8천 명이 저것을 건너면 몇 명이 살아서 건너겠는가.<br>그리고 건너도. 명나라 100만이 기다린다.<br><br>아버지의 목소리가 들린다: "명분 없이는 이겨도 지는 것이다."</div>
-<div class="warn">※ 역사 기록에 따르면 이성계는 이 시점에 이미 결단을 내렸습니다. 이후는 역사적 사실과 가상 시나리오가 교차합니다.</div>
-<div class="ch-area">
+<div class="ch-block">
   <div class="badge-b">TYPE_B · 최종 결단</div>
   <div class="ch-label">너의 결단은</div>
-  <button class="ch" id="c7a" onclick="pickB(7,'a','bad','r7a')"><span class="ch-n">①</span><span>진격한다 — 왕명이다. 죽어도 간다.</span></button>
-  <button class="ch" id="c7b" onclick="pickB(7,'b','good','r7b')"><span class="ch-n">②</span><span>회군한다 — 반역의 이름을 뒤집어쓸 각오로 돌아간다.</span></button>
-  <button class="ch" id="c7c" onclick="pickB(7,'c','neutral','r7c')"><span class="ch-n">③</span><span>왕에게 마지막 상소를 올린다 — 한 번 더 판단을 요청한다.</span></button>
+  <button class="ch" id="c13a" onclick="pickB(13,'a','bad','r13a')"><span class="ch-n">①</span><span>진격한다 — 왕명이다. 죽어도 간다.</span></button>
+  <button class="ch" id="c13b" onclick="pickB(13,'b','good','r13b')"><span class="ch-n">②</span><span>회군한다 — 반역의 이름을 뒤집어쓸 각오로.</span></button>
+  <button class="ch" id="c13c" onclick="pickB(13,'c','neutral','r13c')"><span class="ch-n">③</span><span>왕에게 마지막 상소를 올린다.</span></button>
 </div>
-<div class="res bad" id="r7a">
-  <div class="res-title">진격 — 그 결말</div>
-  <div class="res-body">범람한 강에 들어갔다. 첫날 800명이 익사했다. 명나라 선봉 1만이 나타났을 때 고려군은 싸우지 않고 무너졌다. 이성계는 포로가 됐다.<br><br>1392년 조선은 없다. 오늘 이 땅에서 살고 있는 우리도 없다.</div>
-  <div class="res-nav"><button class="btn-s" onclick="resetB(7)">↩ 다시 선택</button></div>
-</div>
-<div class="res good" id="r7b">
-  <div class="res-title">회군 — 역사의 선택</div>
-  <div class="res-body">이성계가 선택한 것. 군대를 돌렸다. 그러나 회군은 시작일 뿐이다. 개경으로 돌아가면 최영이 기다린다. 명분이 있어야만 살아남는다.</div>
-  <div class="res-nav"><button class="btn-p" onclick="go(8)">다음 — 명분을 세워라 →</button></div>
-</div>
-<div class="res neutral" id="r7c">
-  <div class="res-title">마지막 상소 — 시간이 없다</div>
-  <div class="res-body">상소를 올렸다. 최영은 읽지 않고 불태웠다. 결국 선택은 두 가지뿐이다.</div>
-  <div class="res-nav"><button class="btn-s" onclick="resetB(7)">↩ 다시 선택</button></div>
-</div>
+<div class="res bad" id="r13a"><div class="res-title">진격</div><div class="res-body">첫날 800명이 익사했다. 명나라 선봉이 나타났을 때 군대는 싸우지 않고 무너졌다.<br><br>1392년 조선은 없다. 오늘 이 땅에서 살고 있는 우리도 없다.</div><div class="res-nav"><button class="btn-s" onclick="resetB(13)">↩ 다시 선택</button></div></div>
+<div class="res good" id="r13b"><div class="res-title">회군 — 역사의 선택</div><div class="res-body">군대를 돌렸다. 그러나 회군은 시작일 뿐이다. 개경으로 돌아가면 최영이 기다린다. 명분이 있어야만 살아남는다.</div><div class="res-nav"><button class="btn-p" onclick="go(14)">다음 — 명분을 세워라 →</button></div></div>
+<div class="res neutral" id="r13c"><div class="res-title">마지막 상소</div><div class="res-body">최영은 읽지 않고 불태웠다. 결국 선택은 두 가지뿐이다.</div><div class="res-nav"><button class="btn-s" onclick="resetB(13)">↩ 다시</button></div></div>
 </div>
 
-<!-- ████ 씬 8: 5막 — 명분 설계 (TYPE_A) ████ -->
-<div class="sc" id="s8">
-<div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div><span class="progress-label">5막 · 명분</span></div>
+<!-- ■ 씬 14: 5막-1 명분 — 조민수의 질문 -->
+<div class="sc" id="s14">
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:80%"></div></div><span class="prog-lbl">5막 · 명분</span></div>
 <div class="scene-head">
-  <div class="scene-era">1388년 · 회군 첫날 밤 · 개경으로 향하는 길</div>
+  <div class="scene-era">1388년 · 회군 첫날 밤</div>
   <div class="scene-title">이겼다 — 하지만 아직 살아남지 못했다</div>
 </div>
-<div class="narr">
+<div class="narr-block">
   <div class="narr-who">회군 첫날 밤</div>
-  군대가 돌아서고 있다. 병사들 사이에 소문이 퍼진다.<br>
-  <em>"이성계 장군이 왕명을 어겼다."</em><br><br>
-  조민수가 막사로 들어온다.
+  <div class="narr-text" id="narr14"></div>
 </div>
-<div class="dial">
-  <div class="dial-who">조민수</div>
-  <div class="dial-text">"장군. 병사들이 묻습니다. 우리는 지금 역적이 되는 겁니까? 개경에 도착하면 최영이 우리를 모두 처형할 것입니다. 장군, 왜 우리가 돌아가야 합니까?"</div>
+<div class="nav-area" id="nav14a" style="display:none;">
+  <button class="btn-p" onclick="go(15)">계속 →</button>
 </div>
-<div class="inner">이것이 진짜 질문이다.<br>왜 돌아가는가. 단순히 살기 위해서가 아니라 — 무엇을 위해?</div>
-<div class="insight">
-  <div class="ins-label">역사 너머의 통찰 — 명분과 권력</div>
-  <div class="ins-text">권력은 제로섬 게임이다. 누군가 많이 가지면 누군가는 적게 갖는다. 불만은 모든 시대, 모든 사회에 있다. 명분이 없는 승자는 반드시 반대파를 만난다. 역사는 마지막에 이긴 자를 승자라 부른다 — 처음이 아니라.</div>
 </div>
 
-<div class="tracker" id="tr8">
-  <div class="tr-label">세 가지 명분을 모두 확인하세요</div>
-  <div class="tr-chips">
-    <span class="chip" id="chip8a">백성을 위해</span>
-    <span class="chip" id="chip8b">고려를 위해</span>
-    <span class="chip" id="chip8c">살아남기 위해</span>
+<!-- ■ 씬 15: 5막-2 명분 선택 -->
+<div class="sc" id="s15">
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:86%"></div></div><span class="prog-lbl">5막 · 명분</span></div>
+<div class="dial-block">
+  <div class="dial">
+    <div class="dial-who">조민수</div>
+    <div class="dial-text">"장군. 병사들이 묻습니다. 우리는 지금 역적이 되는 겁니까? 왜 돌아가야 합니까?"</div>
   </div>
-  <div class="tr-bar"><div class="tr-fill" id="fill8"></div></div>
-  <div class="tr-count" id="cnt8">0 / 3 확인됨</div>
 </div>
-<div class="ch-area">
+<div class="inner-block">
+  <div class="inner">이것이 진짜 질문이다.<br>왜 돌아가는가.</div>
+</div>
+<div class="insight-block">
+  <div class="insight">
+    <div class="ins-label">역사 너머의 통찰</div>
+    <div class="ins-text">명분이 없는 승자는 반드시 반대파를 만난다. 역사는 마지막에 이긴 자를 승자라 부른다 — 처음이 아니라.</div>
+  </div>
+</div>
+<div class="tracker-block">
+  <div class="tracker" id="tr15">
+    <div class="tr-label">세 가지 명분을 모두 확인하세요</div>
+    <div class="tr-chips">
+      <span class="chip" id="chip15a">백성을 위해</span>
+      <span class="chip" id="chip15b">고려를 위해</span>
+      <span class="chip" id="chip15c">살아남기 위해</span>
+    </div>
+    <div class="tr-bar"><div class="tr-fill" id="fill15"></div></div>
+    <div class="tr-count" id="cnt15">0 / 3 확인됨</div>
+  </div>
+</div>
+<div class="ch-block">
   <div class="badge-a">TYPE_A · 모두 정답 · 모두 열어야 다음으로</div>
-  <div class="ch-label">병사들에게 무엇을 말하나</div>
-  <div class="ch-note">세 가지 명분의 무게를 모두 느껴보세요</div>
-  <button class="ch" id="c8a" onclick="revA(8,'a','chip8a')"><span class="ch-n">①</span><span><strong style="color:#c8b060">백성을 살리러 간다</strong> — 농번기에 군대를 빼앗긴 백성들을 위해.</span></button>
-  <button class="ch" id="c8b" onclick="revA(8,'b','chip8b')"><span class="ch-n">②</span><span><strong style="color:#a0c070">고려를 바로잡으러 간다</strong> — 잘못된 명령을 내린 자들을 바로잡겠다.</span></button>
-  <button class="ch" id="c8c" onclick="revA(8,'c','chip8c')"><span class="ch-n">③</span><span><strong style="color:#a08060">살기 위해 간다</strong> — 솔직하게 말한다.</span></button>
+  <button class="ch" id="c15a" onclick="revA(15,'a','chip15a')"><span class="ch-n">①</span><span><strong style="color:#c8b060">백성을 살리러 간다</strong></span></button>
+  <button class="ch" id="c15b" onclick="revA(15,'b','chip15b')"><span class="ch-n">②</span><span><strong style="color:#a0c070">고려를 바로잡으러 간다</strong></span></button>
+  <button class="ch" id="c15c" onclick="revA(15,'c','chip15c')"><span class="ch-n">③</span><span><strong style="color:#a08060">살기 위해 간다</strong></span></button>
 </div>
-<div class="ans" id="ans8a"><div class="ans-title">① 백성을 위해 — 공감의 명분</div><div class="ans-body">병사들이 고개를 끄덕였다. 그들도 농민이었다. 고향의 가족이 생각났다. 백성의 언어로 말했을 때 군대가 움직인다. 그러나 개경에서 귀족들은 이 논리를 약하게 봤다. 더 강한 명분이 필요했다.</div></div>
-<div class="ans" id="ans8b"><div class="ans-title">② 고려를 위해 — 역사에 남은 명분</div><div class="ans-body">이것이 이성계가 실제로 내세운 명분이다. 이 명분 위에서 정도전을 만나고, 신진사대부와 손을 잡고, 4년 뒤 조선을 건국한다. 명분은 단순한 구실이 아니었다 — 그것이 새로운 세상을 만드는 설계도가 됐다.</div></div>
-<div class="ans" id="ans8c"><div class="ans-title">③ 살기 위해 — 명분이 없다</div><div class="ans-body">병사들이 조용해졌다. 장수가 살겠다고 왕명을 어겼다 — 그것은 비겁이다. 개경에 도착했을 때 귀족들이 등을 돌렸다. 명분 없는 회군은 반역으로 끝난다. 살려면 더 큰 이유가 필요하다.</div></div>
-<div class="summary" id="sum8">
+<div class="ans" id="ans15a"><div class="ans-title">① 백성을 위해</div><div class="ans-body">병사들이 고개를 끄덕였다. 그들도 농민이었다. 그러나 개경에서 귀족들은 이 논리를 약하게 봤다.</div></div>
+<div class="ans" id="ans15b"><div class="ans-title">② 고려를 위해 — 역사에 남은 명분</div><div class="ans-body">이 명분 위에서 정도전을 만나고, 신진사대부와 손을 잡고, 4년 뒤 조선을 건국한다. 명분은 새로운 세상을 만드는 설계도가 됐다.</div></div>
+<div class="ans" id="ans15c"><div class="ans-title">③ 살기 위해 — 명분이 없다</div><div class="ans-body">장수가 살겠다고 왕명을 어겼다. 개경에 도착했을 때 귀족들이 등을 돌렸다. 명분 없는 회군은 반역으로 끝난다.</div></div>
+<div class="summary" id="sum15">
   <div class="sum-label">세 명분, 이성계는 모두 알았다</div>
-  <div class="sum-body">백성을 위한 것, 나라를 위한 것, 살아남기 위한 것. 이성계는 이 세 가지를 모두 알았다. 그리고 백성과 나라를 앞세웠다. 그것이 진심이든 전략이든 — 그 명분이 조선을 만들었다.</div>
+  <div class="sum-body">백성, 나라, 생존 — 셋 다 알았다. 그리고 백성과 나라를 앞세웠다. 그것이 조선을 만들었다.</div>
 </div>
-<div class="nav-area" id="nav8" style="display:none;">
-  <button class="btn-p" onclick="go(9)">에필로그 →</button>
+<div class="nav-area" id="nav15" style="display:none;">
+  <button class="btn-p" onclick="go(16)">에필로그 →</button>
 </div>
 </div>
 
-<!-- ████ 씬 9: 에필로그 + 후기 ████ -->
-<div class="sc" id="s9">
-<div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div><span class="progress-label">완료</span></div>
-
+<!-- ■ 씬 16: 에필로그 + 후기 -->
+<div class="sc" id="s16">
+<div class="prog"><div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div><span class="prog-lbl">완료</span></div>
 <div class="epilogue">
   <div class="epi-year">1392년 · 태조 원년 · 한양</div>
   <div class="epi-big">위화도에서의 한 결단이<br>500년 왕조를 열었습니다</div>
-
   <svg viewBox="0 0 320 90" width="260" xmlns="http://www.w3.org/2000/svg" style="margin:0 auto 20px;display:block;">
     <rect width="320" height="90" fill="#040302"/>
     <path d="M0 60 Q80 42 160 56 Q240 70 320 48 L320 90 L0 90Z" fill="#060502"/>
     <circle cx="160" cy="30" r="20" fill="none" stroke="#6a4010" stroke-width=".8"/>
     <circle cx="160" cy="30" r="13" fill="#050402"/>
     <text x="160" y="36" text-anchor="middle" fill="#c8820a" font-size="16" font-family="serif" font-weight="700">朝</text>
-    <g fill="#d0c060" opacity=".12"><circle cx="50" cy="16" r="1.5"/><circle cx="90" cy="10" r="1"/><circle cx="240" cy="14" r="1.5"/><circle cx="280" cy="8" r="1"/><circle cx="300" cy="22" r="1"/></g>
+    <g fill="#d0c060" opacity=".12"><circle cx="50" cy="16" r="1.5"/><circle cx="90" cy="10" r="1"/><circle cx="240" cy="14" r="1.5"/><circle cx="280" cy="8" r="1"/></g>
   </svg>
-
-  <div class="epi-body">
-    열여섯의 다짐에서 시작됐습니다.<br>
-    황산의 전우애가 이어졌습니다.<br>
-    위화도의 결단이 역사를 바꿨습니다.<br>
-    그리고 명분이 — 조선을 만들었습니다.
-  </div>
-
+  <div class="epi-body">열여섯의 다짐에서 시작됐습니다.<br>황산의 전우애가 이어졌습니다.<br>위화도의 결단이 역사를 바꿨습니다.<br>그리고 명분이 — 조선을 만들었습니다.</div>
   <div class="epi-quote">역사는 마지막에 이긴 자의 것이다</div>
-
   <div class="epi-summary">
     <div class="epi-sum-label">오늘 우리가 배운 것</div>
-    <div class="epi-sum-item">
-      ① 성격은 경험이 만든다 — 아버지의 칼이 이성계를 만들었다<br>
-      ② 리더는 혼자 이기지 않는다 — 이지란 없이 황산은 없었다<br>
-      ③ 명분은 사후가 아니라 사전에 만들어야 한다<br>
-      ④ 살아남아야 역사가 된다
-    </div>
+    <div class="epi-sum-item">① 성격은 경험이 만든다 — 아버지의 칼이 이성계를 만들었다<br>② 리더는 혼자 이기지 않는다 — 이지란 없이 황산은 없었다<br>③ 명분은 사후가 아니라 사전에 만들어야 한다<br>④ 살아남아야 역사가 된다</div>
   </div>
 </div>
-
-<!-- 후기 작성 -->
 <div class="journal">
   <div class="journal-head">당신의 후기를 남겨주세요</div>
   <div class="journal-sub">이성계의 삶 속에서 · 오늘 당신이 느낀 것</div>
-  <div class="journal-prompt">
-    위화도에서 4만 8천 명을 이끌고 돌아서는 결단.<br>
-    <em>나라면 그 결심을 할 수 있었을까요?</em><br><br>
-    오늘 이 경험 후 — 무엇을 느꼈습니까?<br>
-    이성계에게서 배운 것이 있다면 무엇입니까?<br>
-    아니면 그냥 지금 마음속에 있는 것을 적어도 좋습니다.
-  </div>
+  <div class="journal-prompt">위화도에서 4만 8천 명을 이끌고 돌아서는 결단.<br><em>나라면 그 결심을 할 수 있었을까요?</em><br><br>오늘 이 경험 후 — 무엇을 느꼈습니까?</div>
   <textarea id="journalText" placeholder="자유롭게 적어주세요. 짧아도 괜찮습니다..."></textarea>
   <div class="nav-area" style="padding:12px 0 16px;">
     <button class="btn-p" onclick="saveJournal()">후기 저장하기</button>
@@ -882,489 +779,376 @@ textarea::placeholder{color:#302018;}
   <div class="journal-saved" id="journalSaved">
     <div class="journal-saved-label">오늘의 후기</div>
     <div class="journal-saved-text" id="journalSavedText"></div>
-    <div class="journal-note">※ 역사 속으로 들어가 느낀 감정은, 교과서로 배운 것과 다릅니다.<br>그 차이가 이 앱이 존재하는 이유입니다.</div>
+    <div class="journal-note">※ 몸으로 살아본 역사는, 교과서로 배운 것과 다릅니다.</div>
   </div>
-
-  <div class="epi-preview">
-    다음 화 예고: <span style="color:#5a4030;">정조라면? — 1762년 여름, 뒤주 앞에서</span><br>
-    아버지의 죽음을 본 열한 살 아이가 왜 백성의 편이 됐는가.
-  </div>
+  <div class="epi-preview">다음 화 예고: <span style="color:#5a4030;">정조라면? — 1762년 여름, 뒤주 앞에서</span></div>
 </div>
 </div>
 
-<!-- ████ JavaScript ████ -->
 <script>
-// ── 장 인트로 데이터 ────────────────────────────────────
-const INTROS = {
-  3:{
-    act:'0막 · 어린 시절',
-    title:'아버지의 칼',
-    sub:'1356년 · 함경도 쌍성\n너는 열여섯이다',
-    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-      <rect width="400" height="220" fill="#030204"/>
-      <!-- 밤하늘 -->
-      <rect x="0" y="0" width="400" height="130" fill="#040306"/>
-      <!-- 별 -->
-      <g fill="#d0c080" opacity=".25">
-        <circle cx="60" cy="20" r="1"/><circle cx="120" cy="35" r="1.2"/><circle cx="200" cy="15" r="1"/>
-        <circle cx="280" cy="28" r="1"/><circle cx="340" cy="18" r="1.2"/><circle cx="90" cy="50" r=".8"/>
-        <circle cx="310" cy="45" r=".8"/><circle cx="160" cy="42" r="1"/>
-      </g>
-      <!-- 땅 -->
-      <rect x="0" y="130" width="400" height="90" fill="#060402"/>
-      <path d="M0 130 L60 108 L110 120 L170 100 L230 115 L290 98 L350 112 L400 102 L400 130Z" fill="#0c0806"/>
-      <!-- 횃불들 (처형장) -->
-      <g>
-        <line x1="80" y1="130" x2="80" y2="100" stroke="#5a2808" stroke-width="2"/>
-        <ellipse cx="80" cy="98" rx="5" ry="8" fill="#c05010" opacity=".8"/>
-        <ellipse cx="80" cy="96" rx="3" ry="5" fill="#f0a030" opacity=".9"/>
-        <line x1="320" y1="130" x2="320" y2="100" stroke="#5a2808" stroke-width="2"/>
-        <ellipse cx="320" cy="98" rx="5" ry="8" fill="#c05010" opacity=".8"/>
-        <ellipse cx="320" cy="96" rx="3" ry="5" fill="#f0a030" opacity=".9"/>
-      </g>
-      <!-- 칼 — 세로로 중앙에 -->
-      <g transform="translate(200,60)">
-        <rect x="-2" y="-50" width="4" height="90" fill="#8a8898" rx="1"/>
-        <rect x="-12" y="-10" width="24" height="4" fill="#6a6878" rx="1"/>
-        <rect x="-4" y="40" width="8" height="20" fill="#5a3810" rx="2"/>
-        <line x1="0" y1="-50" x2="0" y2="-65" stroke="#c0c0c8" stroke-width="2.5"/>
-        <polygon points="0,-72 -3,-65 3,-65" fill="#c8c8d0"/>
-      </g>
-      <!-- 아버지 실루엣 -->
-      <g opacity=".85">
-        <circle cx="200" cy="148" r="7" fill="#1a1208"/>
-        <rect x="193" y="155" width="14" height="22" fill="#1a1208" rx="2"/>
-        <path d="M193 165 L182 178 M207 165 L218 178" stroke="#1a1208" stroke-width="3" fill="none"/>
-        <path d="M193 157 L183 170 M207 157 L217 170" stroke="#1a1208" stroke-width="2.5" fill="none"/>
-      </g>
-      <text x="200" y="212" text-anchor="middle" fill="#3a2010" font-size="9" font-family="sans-serif">1356년 · 처형의 밤 · 아버지가 칼을 건넸다</text>
-    </svg>`
-  },
-  4:{
-    act:'1막 · 첫 전투',
-    title:'2천의 병사들이\n나를 올려다봤다',
-    sub:'1361년 · 새벽 · 홍건적 5천이 온다\n명령을 내려야 하는 첫 번째 밤',
-    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-      <rect width="400" height="220" fill="#020304"/>
-      <!-- 새벽 하늘 -->
-      <rect x="0" y="0" width="400" height="120" fill="#030408"/>
-      <!-- 희미한 지평선 빛 -->
-      <ellipse cx="200" cy="120" rx="280" ry="30" fill="#1a0a04" opacity=".6"/>
-      <!-- 별 (새벽이라 흐림) -->
-      <g fill="#a09060" opacity=".12">
-        <circle cx="40" cy="25" r="1.2"/><circle cx="130" cy="18" r="1"/><circle cx="280" cy="22" r="1.5"/><circle cx="370" cy="30" r="1"/>
-      </g>
-      <!-- 산 실루엣 -->
-      <path d="M0 120 L40 88 L80 105 L130 72 L180 95 L230 68 L280 90 L330 74 L370 92 L400 80 L400 120Z" fill="#0a0a08"/>
-      <!-- 땅 (아래에서 올려다보는 시점) -->
-      <rect x="0" y="120" width="400" height="100" fill="#060402"/>
-      <!-- 병사들 — 무릎 꿇고 올려다보는 실루엣 (하단에서 위로) -->
-      <!-- 중앙 열 -->
-      <g fill="#0e0c08">
-        <!-- 무릎 꿇은 자세: 둥근 머리 + 상체 + 무릎 -->
-        <circle cx="200" cy="168" r="5"/><path d="M196 173 L196 185 Q200 188 204 185 L204 173Z"/><ellipse cx="200" cy="187" rx="9" ry="4"/>
-        <!-- 좌우 -->
-        <circle cx="160" cy="172" r="5"/><path d="M156 177 L156 189 Q160 192 164 189 L164 177Z"/><ellipse cx="160" cy="191" rx="9" ry="4"/>
-        <circle cx="240" cy="172" r="5"/><path d="M236 177 L236 189 Q240 192 244 189 L244 177Z"/><ellipse cx="240" cy="191" rx="9" ry="4"/>
-        <!-- 더 바깥 -->
-        <circle cx="120" cy="178" r="4.5"/><path d="M116 182 L116 194 Q120 197 124 194 L124 182Z"/><ellipse cx="120" cy="196" rx="8" ry="3.5"/>
-        <circle cx="280" cy="178" r="4.5"/><path d="M276 182 L276 194 Q280 197 284 194 L284 182Z"/><ellipse cx="280" cy="196" rx="8" ry="3.5"/>
-        <circle cx="80" cy="184" r="4"/><path d="M77 188 L77 198 Q80 201 83 198 L83 188Z"/><ellipse cx="80" cy="200" rx="7" ry="3"/>
-        <circle cx="320" cy="184" r="4"/><path d="M317 188 L317 198 Q320 201 323 198 L323 188Z"/><ellipse cx="320" cy="200" rx="7" ry="3"/>
-        <circle cx="40" cy="190" r="3.5"/><ellipse cx="40" cy="202" rx="6" ry="3"/>
-        <circle cx="360" cy="190" r="3.5"/><ellipse cx="360" cy="202" rx="6" ry="3"/>
-      </g>
-      <!-- 이성계 — 서있는 실루엣 (중앙 위) -->
-      <g opacity=".9">
-        <circle cx="200" cy="135" r="8" fill="#1e1610"/>
-        <rect x="191" y="143" width="18" height="25" fill="#1e1610" rx="2"/>
-        <path d="M191 150 L180 162 M209 150 L220 162" stroke="#1e1610" stroke-width="3" fill="none"/>
-        <!-- 깃발 -->
-        <line x1="200" y1="110" x2="200" y2="144" stroke="#5a2808" stroke-width="1.5"/>
-        <polygon points="200,110 215,117 200,124" fill="#901818" opacity=".9"/>
-      </g>
-      <!-- 횃불들 (시선이 위로 향함) -->
-      <ellipse cx="200" cy="108" rx="8" ry="12" fill="#c06010" opacity=".15"/>
-      <text x="200" y="213" text-anchor="middle" fill="#281408" font-size="9" font-family="sans-serif">1361년 새벽 · 2천의 병사들이 명령을 기다린다</text>
-    </svg>`
-  },
-  5:{
-    act:'2막 · 황산대첩',
-    title:'아기발도가 온다',
-    sub:'1380년 · 황산 · 왜구 10만 대 아군 5천\n전설의 적장, 불사의 소문',
-    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-      <rect width="400" height="220" fill="#060202"/>
-      <!-- 새벽 불빛 하늘 -->
-      <rect x="0" y="0" width="400" height="110" fill="#0a0402"/>
-      <ellipse cx="200" cy="115" rx="300" ry="40" fill="#c05010" opacity=".12"/>
-      <!-- 연기와 불꽃 실루엣 -->
-      <g opacity=".4">
-        <ellipse cx="80" cy="80" rx="20" ry="30" fill="#c04010"/>
-        <ellipse cx="180" cy="60" rx="15" ry="25" fill="#d05010"/>
-        <ellipse cx="300" cy="75" rx="18" ry="28" fill="#c04010"/>
-      </g>
-      <!-- 지형 -->
-      <path d="M0 110 L50 85 L100 98 L160 75 L220 90 L280 70 L340 85 L400 72 L400 110Z" fill="#100a06"/>
-      <rect x="0" y="110" width="400" height="110" fill="#080402"/>
-      <!-- 왜구 깃발들 (뒤편) -->
-      <g stroke="#401010" stroke-width="1" opacity=".6">
-        <line x1="60" y1="110" x2="60" y2="85"/><polygon points="60,85 75,90 60,95" fill="#901010" opacity=".7"/>
-        <line x1="130" y1="110" x2="130" y2="78"/><polygon points="130,78 145,83 130,88" fill="#901010" opacity=".7"/>
-        <line x1="260" y1="110" x2="260" y2="82"/><polygon points="260,82 275,87 260,92" fill="#901010" opacity=".7"/>
-        <line x1="340" y1="110" x2="340" y2="87"/><polygon points="340,87 355,92 340,97" fill="#901010" opacity=".7"/>
-      </g>
-      <!-- 아기발도 — 황금 투구 실루엣 중앙 -->
-      <g>
-        <!-- 황금 투구 -->
-        <ellipse cx="200" cy="130" rx="16" ry="14" fill="#1a1406"/>
-        <ellipse cx="200" cy="126" rx="16" ry="12" fill="#c0900a" opacity=".8"/>
-        <ellipse cx="200" cy="123" rx="13" ry="9" fill="#d8a820" opacity=".7"/>
-        <rect x="184" y="136" width="32" height="20" fill="#1a1406" rx="2"/>
-        <!-- 창 -->
-        <line x1="218" y1="100" x2="218" y2="158" stroke="#4a4040" stroke-width="2"/>
-        <polygon points="218,98 214,108 222,108" fill="#8a8080" opacity=".9"/>
-      </g>
-      <!-- 이성계와 이지란 (좌측) -->
-      <g opacity=".7">
-        <circle cx="110" cy="148" r="6" fill="#181210"/>
-        <rect x="104" y="154" width="12" height="18" fill="#181210" rx="1"/>
-        <circle cx="140" cy="152" r="5" fill="#181210"/>
-        <rect x="135" y="157" width="10" height="16" fill="#181210" rx="1"/>
-      </g>
-      <text x="200" y="213" text-anchor="middle" fill="#3a1006" font-size="9" font-family="sans-serif">1380년 황산 · 황금 투구의 아기발도</text>
-    </svg>`
-  },
-  6:{
-    act:'3막 · 출정 명령',
-    title:'왕명이 내려왔다',
-    sub:'1388년 봄 · 개경 조정\n4만 8천 명 · 요동 정벌',
-    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-      <rect width="400" height="220" fill="#04060a"/>
-      <!-- 낮 하늘 (차갑고 흐린) -->
-      <rect x="0" y="0" width="400" height="100" fill="#060810"/>
-      <ellipse cx="200" cy="20" rx="200" ry="60" fill="#0a0e18" opacity=".8"/>
-      <!-- 구름 -->
-      <ellipse cx="80" cy="35" rx="60" ry="20" fill="#0e1220" opacity=".9"/>
-      <ellipse cx="260" cy="28" rx="80" ry="22" fill="#0c1020" opacity=".9"/>
-      <!-- 개경 궁궐 실루엣 -->
-      <path d="M0 100 L0 70 L40 70 L40 55 L80 55 L80 45 L120 45 L120 55 L160 55 L160 42 L200 30 L240 42 L240 55 L280 55 L280 45 L320 45 L320 55 L360 55 L360 70 L400 70 L400 100Z" fill="#080c14"/>
-      <!-- 기와 지붕 곡선 -->
-      <path d="M120 45 Q160 35 200 30 Q240 35 280 45" fill="none" stroke="#101828" stroke-width="2"/>
-      <!-- 땅 -->
-      <rect x="0" y="100" width="400" height="120" fill="#050403"/>
-      <!-- 병사 행렬 (측면 실루엣들) -->
-      <g fill="#0c0a06" opacity=".8">
-        <!-- 창을 든 병사들 줄지어 -->
-        <g transform="translate(30,130)"><circle cx="0" cy="0" r="4"/><rect x="-3" y="4" width="6" height="14" rx="1"/><line x1="0" y1="-15" x2="0" y2="4" stroke="#1e1a10" stroke-width="1.2"/></g>
-        <g transform="translate(70,133)"><circle cx="0" cy="0" r="4"/><rect x="-3" y="4" width="6" height="14" rx="1"/><line x1="0" y1="-15" x2="0" y2="4" stroke="#1e1a10" stroke-width="1.2"/></g>
-        <g transform="translate(110,131)"><circle cx="0" cy="0" r="4"/><rect x="-3" y="4" width="6" height="14" rx="1"/><line x1="0" y1="-15" x2="0" y2="4" stroke="#1e1a10" stroke-width="1.2"/></g>
-        <g transform="translate(150,134)"><circle cx="0" cy="0" r="4"/><rect x="-3" y="4" width="6" height="14" rx="1"/><line x1="0" y1="-15" x2="0" y2="4" stroke="#1e1a10" stroke-width="1.2"/></g>
-        <g transform="translate(290,133)"><circle cx="0" cy="0" r="4"/><rect x="-3" y="4" width="6" height="14" rx="1"/><line x1="0" y1="-15" x2="0" y2="4" stroke="#1e1a10" stroke-width="1.2"/></g>
-        <g transform="translate(330,131)"><circle cx="0" cy="0" r="4"/><rect x="-3" y="4" width="6" height="14" rx="1"/><line x1="0" y1="-15" x2="0" y2="4" stroke="#1e1a10" stroke-width="1.2"/></g>
-        <g transform="translate(370,134)"><circle cx="0" cy="0" r="4"/><rect x="-3" y="4" width="6" height="14" rx="1"/><line x1="0" y1="-15" x2="0" y2="4" stroke="#1e1a10" stroke-width="1.2"/></g>
-      </g>
-      <!-- 이성계 (중앙 말 위) -->
-      <g transform="translate(200,118)" opacity=".85">
-        <!-- 말 -->
-        <ellipse cx="0" cy="10" rx="20" ry="10" fill="#181210"/>
-        <circle cx="14" cy="2" r="7" fill="#181210"/>
-        <!-- 이성계 -->
-        <circle cx="0" cy="-8" r="7" fill="#201a12"/>
-        <rect x="-5" y="-2" width="10" height="16" fill="#201a12" rx="2"/>
-      </g>
-      <text x="200" y="213" text-anchor="middle" fill="#18140a" font-size="9" font-family="sans-serif">1388년 봄 · 4만 8천의 출정 · 왕명</text>
-    </svg>`
-  },
-  7:{
-    act:'4막 · 위화도',
-    title:'강이 넘친다\n군대가 썩어간다',
-    sub:'1388년 음력 5월 · 압록강 범람\n열흘째 비 · 최후의 결단',
-    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-      <rect width="400" height="220" fill="#020406"/>
-      <!-- 먹구름 가득한 하늘 -->
-      <rect x="0" y="0" width="400" height="110" fill="#03050a"/>
-      <ellipse cx="100" cy="30" rx="90" ry="28" fill="#060a12" opacity=".95"/>
-      <ellipse cx="260" cy="22" rx="120" ry="30" fill="#050810" opacity=".95"/>
-      <ellipse cx="380" cy="35" rx="70" ry="22" fill="#060a12" opacity=".9"/>
-      <!-- 번개 -->
-      <polyline points="230,5 222,35 232,35 218,65" fill="none" stroke="#d0d8e0" stroke-width="1" opacity=".3"/>
-      <!-- 범람하는 강 -->
-      <rect x="0" y="110" width="400" height="40" fill="#04101a"/>
-      <path d="M0 115 Q50 105 100 120 Q150 133 200 112 Q250 92 300 118 Q350 138 400 115 L400 150 L0 150Z" fill="#061420" opacity=".9"/>
-      <path d="M0 130 Q80 118 160 135 Q240 150 320 128 L400 140 L400 155 Q320 148 240 162 Q160 172 80 150 L0 148Z" fill="#08182a" opacity=".7"/>
-      <!-- 섬 (위화도) -->
-      <ellipse cx="200" cy="158" rx="150" ry="35" fill="#0a0c06"/>
-      <!-- 비 -->
-      <g stroke="#3060a0" stroke-width=".4" opacity=".3">
-        <line x1="50" y1="0" x2="44" y2="60"/><line x1="120" y1="8" x2="114" y2="68"/>
-        <line x1="200" y1="0" x2="194" y2="65"/><line x1="280" y1="5" x2="274" y2="68"/>
-        <line x1="360" y1="0" x2="354" y2="62"/>
-        <line x1="85" y1="20" x2="79" y2="78"/><line x1="240" y1="15" x2="234" y2="75"/>
-        <line x1="320" y1="10" x2="314" y2="72"/>
-      </g>
-      <!-- 이성계 홀로 서있는 실루엣 -->
-      <g opacity=".9">
-        <circle cx="200" cy="138" r="7" fill="#101408"/>
-        <rect x="193" y="145" width="14" height="22" fill="#101408" rx="2"/>
-        <path d="M193 152 L183 164" stroke="#101408" stroke-width="2.5" fill="none"/>
-        <path d="M207 152 L217 164" stroke="#101408" stroke-width="2.5" fill="none"/>
-        <!-- 깃발 (비에 젖어 늘어짐) -->
-        <line x1="200" y1="114" x2="200" y2="146" stroke="#3a2808" stroke-width="1.2"/>
-        <path d="M200 114 Q214 120 200 126" fill="none" stroke="#701010" stroke-width="1.5"/>
-      </g>
-      <!-- 텐트들 (희미하게) -->
-      <g fill="#0a0c08" opacity=".5">
-        <polygon points="100,165 120,148 140,165"/><polygon points="260,165 280,148 300,165"/>
-        <polygon points="50,168 65,155 80,168"/><polygon points="320,168 335,155 350,168"/>
-      </g>
-      <text x="200" y="213" text-anchor="middle" fill="#0c1018" font-size="9" font-family="sans-serif">1388년 음력 5월 · 위화도 · 압록강이 넘친다</text>
-    </svg>`
-  },
-  8:{
-    act:'5막 · 명분',
-    title:'이겼다\n하지만 아직 살아남지 못했다',
-    sub:'회군 첫날 밤 · 개경으로 향하는 길\n반역자인가 구국의 장군인가',
-    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-      <rect width="400" height="220" fill="#050403"/>
-      <!-- 밤하늘 (맑아지기 시작) -->
-      <rect x="0" y="0" width="400" height="110" fill="#060504"/>
-      <g fill="#d0c070" opacity=".2">
-        <circle cx="50" cy="20" r="1.5"/><circle cx="130" cy="14" r="1.2"/><circle cx="220" cy="25" r="1"/>
-        <circle cx="300" cy="16" r="1.5"/><circle cx="370" cy="28" r="1"/><circle cx="80" cy="42" r=".8"/>
-        <circle cx="180" cy="38" r="1.2"/><circle cx="340" cy="40" r=".8"/>
-      </g>
-      <!-- 달 -->
-      <circle cx="320" cy="35" r="20" fill="#0a0806" opacity=".9"/>
-      <circle cx="320" cy="35" r="16" fill="#c8a820" opacity=".2"/>
-      <!-- 지형 -->
-      <path d="M0 110 L60 85 L110 98 L170 76 L230 90 L290 72 L350 86 L400 74 L400 110Z" fill="#0e0c08"/>
-      <rect x="0" y="110" width="400" height="110" fill="#080604"/>
-      <!-- 행군하는 군대 (돌아가는 길) -->
-      <g fill="#141008" opacity=".7">
-        <g transform="translate(40,145)"><circle cx="0" cy="0" r="3.5"/><rect x="-2.5" y="3.5" width="5" height="12" rx="1"/></g>
-        <g transform="translate(80,148)"><circle cx="0" cy="0" r="3.5"/><rect x="-2.5" y="3.5" width="5" height="12" rx="1"/></g>
-        <g transform="translate(120,145)"><circle cx="0" cy="0" r="3.5"/><rect x="-2.5" y="3.5" width="5" height="12" rx="1"/></g>
-        <g transform="translate(160,148)"><circle cx="0" cy="0" r="3.5"/><rect x="-2.5" y="3.5" width="5" height="12" rx="1"/></g>
-        <g transform="translate(240,148)"><circle cx="0" cy="0" r="3.5"/><rect x="-2.5" y="3.5" width="5" height="12" rx="1"/></g>
-        <g transform="translate(280,145)"><circle cx="0" cy="0" r="3.5"/><rect x="-2.5" y="3.5" width="5" height="12" rx="1"/></g>
-        <g transform="translate(320,148)"><circle cx="0" cy="0" r="3.5"/><rect x="-2.5" y="3.5" width="5" height="12" rx="1"/></g>
-        <g transform="translate(360,145)"><circle cx="0" cy="0" r="3.5"/><rect x="-2.5" y="3.5" width="5" height="12" rx="1"/></g>
-      </g>
-      <!-- 이성계 홀로 — 무리와 떨어져 -->
-      <g opacity=".9">
-        <circle cx="200" cy="132" r="7" fill="#1a1610"/>
-        <rect x="193" y="139" width="14" height="22" fill="#1a1610" rx="2"/>
-      </g>
-      <!-- 깃발 -->
-      <line x1="200" y1="108" x2="200" y2="140" stroke="#4a2808" stroke-width="1.5"/>
-      <polygon points="200,108 214,114 200,120" fill="#a02010" opacity=".8"/>
-      <text x="200" y="213" text-anchor="middle" fill="#281806" font-size="9" font-family="sans-serif">회군 첫날 밤 · 돌아가는 길 · 명분을 세워야 한다</text>
-    </svg>`
-  },
-  9:{
-    act:'에필로그',
-    title:'1392년\n조선이 열리다',
-    sub:'위화도의 결단이 4년을 달렸다\n역사는 마지막에 이긴 자의 것이다',
-    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-      <rect width="400" height="220" fill="#040402"/>
-      <!-- 새벽 하늘 (희망) -->
-      <rect x="0" y="0" width="400" height="100" fill="#060504"/>
-      <ellipse cx="200" cy="110" rx="300" ry="50" fill="#c88020" opacity=".08"/>
-      <ellipse cx="200" cy="115" rx="220" ry="40" fill="#d8a030" opacity=".06"/>
-      <!-- 별들 (새벽 마지막 별) -->
-      <g fill="#d0c060" opacity=".15">
-        <circle cx="60" cy="20" r="1.2"/><circle cx="330" cy="16" r="1.5"/><circle cx="180" cy="10" r="1"/>
-      </g>
-      <!-- 한양 도성 실루엣 -->
-      <path d="M0 100 L30 80 L60 85 L90 65 L130 70 L160 58 L200 45 L240 58 L270 70 L310 65 L340 85 L370 80 L400 100Z" fill="#0a0c08"/>
-      <!-- 궁궐 지붕 (조선) -->
-      <path d="M160 58 Q200 40 240 58" fill="none" stroke="#1a180e" stroke-width="2"/>
-      <path d="M150 65 Q200 48 250 65" fill="none" stroke="#141208" stroke-width="1.5"/>
-      <!-- 땅 -->
-      <rect x="0" y="100" width="400" height="120" fill="#060504"/>
-      <!-- 朝鮮 한자 (빛처럼 떠오르는) -->
-      <text x="200" y="165" text-anchor="middle" fill="#c8a020" font-size="48" font-family="serif" font-weight="700" opacity=".18">朝鮮</text>
-      <!-- 작은 인물들 (백성들) -->
-      <g fill="#100e08" opacity=".5">
-        <circle cx="80" cy="148" r="3"/><circle cx="150" cy="152" r="3"/><circle cx="260" cy="150" r="3"/>
-        <circle cx="320" cy="148" r="3"/><circle cx="110" cy="158" r="2.5"/><circle cx="290" cy="156" r="2.5"/>
-      </g>
-      <text x="200" y="213" text-anchor="middle" fill="#281e08" font-size="9" font-family="sans-serif">1392년 · 조선 건국 · 500년 왕조가 열리다</text>
-    </svg>`
-  }
+// ── 타이핑 텍스트 데이터 ────────────────────────────────
+const TYPING = {
+  narr3: '비가 왔다. 소리도 없이.\n너는 담장 뒤에 숨어 아버지를 봤다.\n\n아버지의 동지들이 하나씩 쓰러졌다.\n아버지는 움직이지 않았다.',
+  dial4: '"성계야. 이기는 것이 전부가 아니다.\n하지만 명분 없이는 이겨도 지는 것이다.\n알겠느냐?"',
+  narr4: '너는 대답하지 못했다.\n칼을 받아 들었다.\n무거웠다.',
+  narr6: '처음이다.\n명령을 받은 것이 아니라,\n내가 명령을 내려야 한다.\n\n2천 명이 나를 올려다보고 있다.',
+  narr8: '왜구 10만. 아군 5천.\n\n그리고 황금빛 투구의 아기발도.\n화살도 통하지 않는다는 소문.',
+  narr10: '명나라가 고려 북쪽 땅을 내놓으라 통보했다.\n최영 장군이 격노했다.\n\n우왕이 결정했다: 요동 정벌.\n지휘관은 이성계. 병사 4만 8천.',
+  narr12: '열흘째 비가 온다.\n압록강이 범람해 위화도는 섬이 됐다.\n\n식량은 열흘치.\n병자는 3천.\n탈영병은 셀 수 없다.\n\n개경에서 최영의 명령이 왔다:\n"즉시 진격하라."',
+  narr14: '군대가 돌아서고 있다.\n병사들 사이에 소문이 퍼진다.\n\n"이성계 장군이 왕명을 어겼다."',
 };
 
-// ── 씬 전환 (인트로 포함) ────────────────────────────────
-let introTarget = -1;
+// 타이핑 속도 (ms per 글자)
+const CHAR_SPEED = 55;
+let typingTimers = [];
 
-function go(n){
-  // 씬 0,1,2는 인트로 없음
-  if(n >= 3 && INTROS[n]){
-    showIntro(n);
-  } else {
-    switchScene(n);
+function typeText(elementId, text, onDone) {
+  typingTimers.forEach(clearTimeout);
+  typingTimers = [];
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  el.innerHTML = '';
+  let i = 0;
+  const lines = text.split('\n');
+  let html = '';
+  let charCount = 0;
+
+  function addChar() {
+    if (i >= text.length) {
+      // 커서 제거
+      el.innerHTML = el.innerHTML.replace('<span class="cursor"></span>', '');
+      if (onDone) setTimeout(onDone, 400);
+      return;
+    }
+    const ch = text[i];
+    if (ch === '\n') {
+      el.innerHTML = el.innerHTML.replace('<span class="cursor"></span>', '') + '<br><span class="cursor"></span>';
+    } else {
+      const cur = el.innerHTML.replace('<span class="cursor"></span>', '');
+      el.innerHTML = cur + ch + '<span class="cursor"></span>';
+    }
+    i++;
+    const delay = ch === '\n' ? CHAR_SPEED * 6 : ch === '.' || ch === '?' || ch === '!' ? CHAR_SPEED * 5 : ch === ',' ? CHAR_SPEED * 3 : CHAR_SPEED;
+    typingTimers.push(setTimeout(addChar, delay));
   }
+  addChar();
 }
 
-function showIntro(n){
+// ── 장 인트로 데이터 ─────────────────────────────────────
+const INTROS = {
+  3:{act:'0막 · 아버지의 칼',title:'처형의 밤',sub:'1356년 · 함경도 쌍성\n너는 열여섯이다',
+    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;"><rect width="400" height="220" fill="#030204"/><rect x="0" y="0" width="400" height="130" fill="#040306"/><g fill="#d0c080" opacity=".2"><circle cx="60" cy="20" r="1"/><circle cx="200" cy="15" r="1"/><circle cx="340" cy="18" r="1.2"/><circle cx="90" cy="50" r=".8"/><circle cx="310" cy="45" r=".8"/></g><rect x="0" y="130" width="400" height="90" fill="#060402"/><line x1="80" y1="130" x2="80" y2="100" stroke="#5a2808" stroke-width="2"/><ellipse cx="80" cy="97" rx="5" ry="8" fill="#c05010" opacity=".8"/><ellipse cx="80" cy="94" rx="3" ry="5" fill="#f0a030" opacity=".9"/><line x1="320" y1="130" x2="320" y2="100" stroke="#5a2808" stroke-width="2"/><ellipse cx="320" cy="97" rx="5" ry="8" fill="#c05010" opacity=".8"/><ellipse cx="320" cy="94" rx="3" ry="5" fill="#f0a030" opacity=".9"/><g transform="translate(200,62)"><rect x="-2" y="-50" width="4" height="90" fill="#8a8898" rx="1"/><rect x="-12" y="-10" width="24" height="4" fill="#6a6878" rx="1"/><rect x="-4" y="40" width="8" height="20" fill="#5a3810" rx="2"/><line x1="0" y1="-50" x2="0" y2="-65" stroke="#c0c0c8" stroke-width="2.5"/><polygon points="0,-72 -3,-65 3,-65" fill="#c8c8d0"/></g><text x="200" y="213" text-anchor="middle" fill="#3a2010" font-size="9" font-family="sans-serif">1356년 · 처형의 밤 · 아버지가 칼을 건넸다</text></svg>`},
+  6:{act:'1막 · 첫 전투',title:'2천의 병사들이\n나를 올려다봤다',sub:'1361년 · 새벽 · 홍건적 5천이 온다\n처음으로 명령을 내려야 하는 밤',
+    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;"><rect width="400" height="220" fill="#020304"/><rect x="0" y="0" width="400" height="120" fill="#030408"/><ellipse cx="200" cy="120" rx="280" ry="30" fill="#1a0a04" opacity=".5"/><path d="M0 120 L40 90 L80 105 L130 74 L180 96 L230 70 L280 90 L330 75 L370 92 L400 80 L400 120Z" fill="#0a0a08"/><rect x="0" y="120" width="400" height="100" fill="#060402"/><g fill="#0e0c08"><circle cx="200" cy="158" r="5"/><path d="M196 163 L196 175 Q200 178 204 175 L204 163Z"/><ellipse cx="200" cy="177" rx="9" ry="4"/><circle cx="160" cy="162" r="4.5"/><ellipse cx="160" cy="178" rx="8" ry="3.5"/><circle cx="240" cy="162" r="4.5"/><ellipse cx="240" cy="178" rx="8" ry="3.5"/><circle cx="120" cy="167" r="4"/><ellipse cx="120" cy="181" rx="7" ry="3"/><circle cx="280" cy="167" r="4"/><ellipse cx="280" cy="181" rx="7" ry="3"/><circle cx="80" cy="172" r="3.5"/><ellipse cx="80" cy="185" rx="6" ry="3"/><circle cx="320" cy="172" r="3.5"/><ellipse cx="320" cy="185" rx="6" ry="3"/><circle cx="40" cy="177" r="3"/><ellipse cx="40" cy="189" rx="5" ry="2.5"/><circle cx="360" cy="177" r="3"/><ellipse cx="360" cy="189" rx="5" ry="2.5"/></g><circle cx="200" cy="130" r="7" fill="#1e1610"/><rect x="193" y="137" width="14" height="22" fill="#1e1610" rx="2"/><line x1="200" y1="106" x2="200" y2="130" stroke="#5a2808" stroke-width="1.5"/><polygon points="200,104 213,110 200,116" fill="#901818" opacity=".9"/><text x="200" y="213" text-anchor="middle" fill="#281408" font-size="9" font-family="sans-serif">1361년 새벽 · 2천의 병사들이 명령을 기다린다</text></svg>`},
+  8:{act:'2막 · 황산대첩',title:'아기발도가 온다',sub:'1380년 · 황산 · 왜구 10만\n불사의 전설',
+    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;"><rect width="400" height="220" fill="#060202"/><rect x="0" y="0" width="400" height="110" fill="#0a0402"/><ellipse cx="200" cy="115" rx="300" ry="40" fill="#c05010" opacity=".1"/><path d="M0 110 L50 85 L100 98 L160 75 L220 90 L280 72 L340 86 L400 74 L400 110Z" fill="#100a06"/><rect x="0" y="110" width="400" height="110" fill="#080402"/><g fill="#c05010" opacity=".3"><rect x="80" y="95" width="2" height="18"/><rect x="180" y="80" width="2" height="25"/><rect x="300" y="90" width="2" height="20"/></g><ellipse cx="200" cy="140" rx="16" ry="14" fill="#1a1406"/><ellipse cx="200" cy="136" rx="16" ry="12" fill="#c0900a" opacity=".8"/><ellipse cx="200" cy="133" rx="13" ry="9" fill="#d8a820" opacity=".7"/><rect x="184" y="150" width="32" height="22" fill="#1a1406" rx="2"/><text x="200" y="213" text-anchor="middle" fill="#3a1006" font-size="9" font-family="sans-serif">1380년 황산 · 황금 투구의 아기발도</text></svg>`},
+  10:{act:'3막 · 출정 명령',title:'왕명이 내려왔다',sub:'1388년 봄 · 개경 조정\n4만 8천 명 · 요동 정벌',
+    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;"><rect width="400" height="220" fill="#04060a"/><rect x="0" y="0" width="400" height="100" fill="#060810"/><ellipse cx="80" cy="35" rx="60" ry="20" fill="#0e1220" opacity=".9"/><ellipse cx="260" cy="28" rx="80" ry="22" fill="#0c1020" opacity=".9"/><path d="M0 100 L0 70 L40 70 L40 55 L80 55 L80 45 L120 45 L120 55 L160 55 L160 42 L200 30 L240 42 L240 55 L280 55 L280 45 L320 45 L320 55 L360 55 L360 70 L400 70 L400 100Z" fill="#080c14"/><rect x="0" y="100" width="400" height="120" fill="#050403"/><g fill="#0c0a06" opacity=".7"><g transform="translate(50,135)"><circle cx="0" cy="0" r="4"/><rect x="-3" y="4" width="6" height="14" rx="1"/><line x1="0" y1="-15" x2="0" y2="4" stroke="#1e1a10" stroke-width="1.2"/></g><g transform="translate(110,135)"><circle cx="0" cy="0" r="4"/><rect x="-3" y="4" width="6" height="14" rx="1"/><line x1="0" y1="-15" x2="0" y2="4" stroke="#1e1a10" stroke-width="1.2"/></g><g transform="translate(290,135)"><circle cx="0" cy="0" r="4"/><rect x="-3" y="4" width="6" height="14" rx="1"/><line x1="0" y1="-15" x2="0" y2="4" stroke="#1e1a10" stroke-width="1.2"/></g><g transform="translate(350,135)"><circle cx="0" cy="0" r="4"/><rect x="-3" y="4" width="6" height="14" rx="1"/><line x1="0" y1="-15" x2="0" y2="4" stroke="#1e1a10" stroke-width="1.2"/></g></g><text x="200" y="213" text-anchor="middle" fill="#18140a" font-size="9" font-family="sans-serif">1388년 봄 · 4만 8천의 출정 · 왕명</text></svg>`},
+  12:{act:'4막 · 위화도',title:'열흘째 비가 온다',sub:'1388년 음력 5월 · 압록강 범람\n최후의 결단',
+    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;"><rect width="400" height="220" fill="#020406"/><rect x="0" y="0" width="400" height="110" fill="#03050a"/><ellipse cx="100" cy="30" rx="90" ry="28" fill="#060a12" opacity=".95"/><ellipse cx="260" cy="22" rx="120" ry="30" fill="#050810" opacity=".95"/><g stroke="#3060a0" stroke-width=".4" opacity=".3"><line x1="60" y1="0" x2="54" y2="65"/><line x1="140" y1="10" x2="134" y2="75"/><line x1="220" y1="0" x2="214" y2="68"/><line x1="300" y1="5" x2="294" y2="70"/><line x1="380" y1="0" x2="374" y2="65"/></g><path d="M0 110 Q60 97 120 112 Q180 126 240 106 Q300 88 360 108 L400 112 L400 125 Q360 120 300 104 Q240 86 180 108 Q120 126 60 114 L0 120Z" fill="#04180a"/><ellipse cx="200" cy="162" rx="150" ry="35" fill="#0a0c06"/><circle cx="200" cy="144" r="7" fill="#101408"/><rect x="193" y="151" width="14" height="22" fill="#101408" rx="2"/><line x1="200" y1="120" x2="200" y2="144" stroke="#3a2808" stroke-width="1.2"/><path d="M200 120 Q214 126 200 132" fill="none" stroke="#701010" stroke-width="1.5"/><text x="200" y="213" text-anchor="middle" fill="#0c1018" font-size="9" font-family="sans-serif">1388년 음력 5월 · 위화도 · 압록강이 넘친다</text></svg>`},
+  14:{act:'5막 · 명분',title:'이겼다\n하지만 아직 살아남지 못했다',sub:'회군 첫날 밤\n반역자인가 구국의 장군인가',
+    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;"><rect width="400" height="220" fill="#050403"/><rect x="0" y="0" width="400" height="110" fill="#060504"/><g fill="#d0c070" opacity=".15"><circle cx="50" cy="20" r="1.5"/><circle cx="130" cy="14" r="1.2"/><circle cx="300" cy="16" r="1.5"/><circle cx="370" cy="28" r="1"/></g><circle cx="320" cy="35" r="20" fill="#0a0806" opacity=".9"/><circle cx="320" cy="35" r="16" fill="#c8a820" opacity=".18"/><path d="M0 110 L60 85 L110 98 L170 76 L230 90 L290 72 L350 86 L400 74 L400 110Z" fill="#0e0c08"/><rect x="0" y="110" width="400" height="110" fill="#080604"/><g fill="#141008" opacity=".6"><g transform="translate(50,148)"><circle cx="0" cy="0" r="3.5"/><rect x="-2.5" y="3.5" width="5" height="12" rx="1"/></g><g transform="translate(100,148)"><circle cx="0" cy="0" r="3.5"/><rect x="-2.5" y="3.5" width="5" height="12" rx="1"/></g><g transform="translate(300,148)"><circle cx="0" cy="0" r="3.5"/><rect x="-2.5" y="3.5" width="5" height="12" rx="1"/></g><g transform="translate(350,148)"><circle cx="0" cy="0" r="3.5"/><rect x="-2.5" y="3.5" width="5" height="12" rx="1"/></g></g><circle cx="200" cy="132" r="7" fill="#1a1610"/><rect x="193" y="139" width="14" height="22" fill="#1a1610" rx="2"/><line x1="200" y1="108" x2="200" y2="132" stroke="#4a2808" stroke-width="1.5"/><polygon points="200,106 214,112 200,118" fill="#a02010" opacity=".8"/><text x="200" y="213" text-anchor="middle" fill="#281806" font-size="9" font-family="sans-serif">회군 첫날 밤 · 돌아가는 길 · 명분을 세워야 한다</text></svg>`},
+  16:{act:'에필로그',title:'1392년\n조선이 열리다',sub:'위화도의 결단이 4년을 달렸다',
+    svg:`<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;"><rect width="400" height="220" fill="#040402"/><rect x="0" y="0" width="400" height="100" fill="#060504"/><ellipse cx="200" cy="110" rx="300" ry="50" fill="#c88020" opacity=".07"/><g fill="#d0c060" opacity=".12"><circle cx="60" cy="20" r="1.2"/><circle cx="330" cy="16" r="1.5"/><circle cx="180" cy="10" r="1"/></g><path d="M0 100 L30 80 L60 85 L90 65 L130 70 L160 58 L200 45 L240 58 L270 70 L310 65 L340 85 L370 80 L400 100Z" fill="#0a0c08"/><rect x="0" y="100" width="400" height="120" fill="#060504"/><text x="200" y="170" text-anchor="middle" fill="#c8a020" font-size="48" font-family="serif" font-weight="700" opacity=".15">朝鮮</text><text x="200" y="213" text-anchor="middle" fill="#281e08" font-size="9" font-family="sans-serif">1392년 · 조선 건국 · 500년 왕조가 열리다</text></svg>`},
+};
+
+// ── 인트로 시스템 ─────────────────────────────────────────
+// ── 오프닝 애니메이션 ────────────────────────────────────
+function runOpeningAnim() {
+  const portrait = document.getElementById('op-portrait');
+  const series   = document.getElementById('op-series');
+  const group1   = document.getElementById('op-group1');
+  const group2   = document.getElementById('op-group2');
+  const cta      = document.getElementById('op-cta');
+  const disc     = document.getElementById('op-disc');
+  if (!portrait) return;
+
+  // 초기화
+  [portrait,series,group1,group2,cta,disc].forEach(el=>{ if(el){ el.classList.remove('show'); el.style.opacity='0'; } });
+  group2.style.display = 'none';
+
+  // 1. 어진 페이드인 (0.5초 후)
+  setTimeout(()=>{ portrait.classList.add('show'); }, 500);
+
+  // 2. 시리즈 레이블 (1.5초 후)
+  setTimeout(()=>{ series.classList.add('show'); }, 1500);
+
+  // 3. 첫 번째 3줄 동시 페이드인 (2.5초 후)
+  setTimeout(()=>{ group1.classList.add('show'); }, 2500);
+
+  // 4. 첫 번째 그룹 페이드아웃 (5.5초 후)
+  setTimeout(()=>{
+    group1.style.transition = 'opacity 1.2s ease';
+    group1.style.opacity = '0';
+  }, 5500);
+
+  // 5. 두 번째 그룹 페이드인 (6.8초 후)
+  setTimeout(()=>{
+    group2.style.display = 'block';
+    setTimeout(()=>{ group2.classList.add('show'); }, 50);
+  }, 6800);
+
+  // 6. 환생하다 버튼 등장 (9.5초 후)
+  setTimeout(()=>{ cta.classList.add('show'); }, 9500);
+
+  // 7. 면책 고지 (10.2초 후)
+  setTimeout(()=>{ disc.classList.add('show'); }, 10200);
+}
+
+let introTarget = -1;
+function go(n) {
+  if (INTROS[n]) { showIntro(n); } else { pushAndSwitch(n); }
+}
+function showIntro(n) {
   introTarget = n;
   const d = INTROS[n];
   document.getElementById('intro-act').textContent = d.act;
   document.getElementById('intro-svg').innerHTML = d.svg;
-  document.getElementById('intro-title').innerHTML = d.title.replace('\n','<br>');
+  document.getElementById('intro-title').innerHTML = d.title.replace(/\n/g,'<br>');
   document.getElementById('intro-sub').innerHTML = d.sub.replace(/\n/g,'<br>');
-
   const ov = document.getElementById('intro-overlay');
-  ov.style.display='flex';
-  ov.style.animation='none';
-  ov.offsetHeight; // reflow
-  ov.style.animation='intro-in .5s ease forwards';
-
+  ov.classList.remove('hide');
+  ov.style.display = 'flex';
   // 제목 애니메이션
   const title = document.getElementById('intro-title');
   const sub = document.getElementById('intro-sub');
-  title.style.opacity='0';title.style.transform='translateY(12px)';title.style.transition='none';
-  sub.style.opacity='0';sub.style.transform='translateY(8px)';sub.style.transition='none';
-  setTimeout(()=>{
-    title.style.transition='opacity .7s ease, transform .7s ease';
-    title.style.opacity='1';title.style.transform='translateY(0)';
-  },300);
-  setTimeout(()=>{
-    sub.style.transition='opacity .7s ease, transform .7s ease';
-    sub.style.opacity='1';sub.style.transform='translateY(0)';
-  },600);
-
-  // 3초 후 자동 전환
-  setTimeout(()=>skipIntro(), 3500);
+  title.style.cssText = 'opacity:0;transform:translateY(12px);transition:none;';
+  sub.style.cssText = 'opacity:0;transform:translateY(8px);transition:none;';
+  setTimeout(() => {
+    title.style.cssText = 'opacity:1;transform:translateY(0);transition:opacity .7s ease,transform .7s ease;';
+  }, 300);
+  setTimeout(() => {
+    sub.style.cssText = 'opacity:1;transform:translateY(0);transition:opacity .7s ease,transform .7s ease;';
+  }, 600);
+  setTimeout(skipIntro, 3800);
 }
-
-function skipIntro(){
-  if(introTarget < 0) return;
+function skipIntro() {
+  if (introTarget < 0) return;
   const ov = document.getElementById('intro-overlay');
-  ov.style.animation='intro-out .5s ease forwards';
-  const target = introTarget;
-  introTarget = -1;
-  setTimeout(()=>{
-    ov.style.display='none';
-    switchScene(target);
-  }, 500);
+  ov.classList.add('hide');
+  const t = introTarget; introTarget = -1;
+  setTimeout(() => { ov.style.display = 'none'; ov.classList.remove('hide'); pushAndSwitch(t); }, 500);
 }
 
-function switchScene(n){
-  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
-  const t=document.getElementById('s'+n);
-  if(t){t.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+// ── 씬 히스토리 (뒤로가기) ───────────────────────────────
+const sceneHistory = [];
+
+function go(n) {
+  if (INTROS[n]) { showIntro(n); } else { pushAndSwitch(n); }
+}
+function pushAndSwitch(n) {
+  // 현재 씬 번호 저장
+  const cur = getCurrentScene();
+  if (cur >= 0) sceneHistory.push(cur);
+  switchScene(n);
+}
+function goBack() {
+  if (sceneHistory.length === 0) { switchScene(0); return; }
+  const prev = sceneHistory.pop();
+  switchScene(prev);
+}
+function getCurrentScene() {
+  const on = document.querySelector('.sc.on');
+  if (!on) return -1;
+  return parseInt(on.id.replace('s',''));
+}
+
+const TYPING_SCENES = {
+  3: [{ id:'narr3', navId:'nav3a' }],
+  4: [{ id:'dial4', navId:null }, { id:'narr4', navId:'nav4a' }],
+  6: [{ id:'narr6', navId:'nav6a' }],
+  8: [{ id:'narr8', navId:'nav8a' }],
+  10:[{ id:'narr10', navId:'nav10a' }],
+  12:[{ id:'narr12', navId:'nav12a' }],
+  14:[{ id:'narr14', navId:'nav14a' }],
+};
+
+function switchScene(n) {
+  rbTimers.forEach(clearTimeout); rbTimers = [];
+  typingTimers.forEach(clearTimeout); typingTimers = [];
+  document.querySelectorAll('.sc').forEach(s => s.classList.remove('on'));
+  const t = document.getElementById('s' + n);
+  if (t) { t.classList.add('on'); window.scrollTo({ top:0, behavior:'smooth' }); }
   resetAll(n);
-}
-
-// ── 환생 시퀀스 ──────────────────────────────────────────
-function startRebirth(){
-  go(1);
-  const seq=[
-    {id:'rb0',delay:200},{id:'rs0',delay:500},
-    {id:'rb1',delay:900},{id:'rs1',delay:1200},
-    {id:'rb-portal',delay:1600},{id:'rs2',delay:2200},
-    {id:'rb2',delay:2500},{id:'rs3',delay:2800},
-    {id:'rb3',delay:3100},{id:'rs4',delay:3400},
-    {id:'rb4',delay:3700},{id:'rs5',delay:4000},
-    {id:'rb5',delay:4300},{id:'rs6',delay:4600},
-    {id:'rb6',delay:5000},{id:'rs7',delay:5400},
-    {id:'rb7',delay:5700},
-  ];
-  seq.forEach(({id,delay})=>{
-    setTimeout(()=>{
-      const el=document.getElementById(id);
-      if(el)el.classList.add('show');
-    },delay);
-  });
-  setTimeout(()=>{
-    const cta=document.getElementById('rb-cta');
-    if(cta)cta.style.opacity='1';
-  },6300);
-}
-
-// ── 기억 아코디언 ──────────────────────────────────────
-function toggleMem(el){el.classList.toggle('open');}
-
-// ── TYPE_A — 모두 열기 ───────────────────────────────────
-const stateA={};
-function revA(scene,letter,chipId){
-  const key=scene+'_'+letter;
-  if(stateA[key]) return;
-  stateA[key]=true;
-  // 버튼 스타일
-  const btn=document.getElementById('c'+scene+letter);
-  if(btn)btn.classList.add('revealed');
-  // 개별 설명
-  const ans=document.getElementById('ans'+scene+letter);
-  if(ans){ans.classList.add('on');}
-  // 칩 업데이트
-  const chip=document.getElementById(chipId);
-  if(chip)chip.classList.add('found');
-  // 트래커
-  const sceneKeys=['a','b','c'].filter(l=>stateA[scene+'_'+l]);
-  const n=sceneKeys.length;
-  const fill=document.getElementById('fill'+scene);
-  const cnt=document.getElementById('cnt'+scene);
-  if(fill)fill.style.width=(n/3*100)+'%';
-  if(cnt)cnt.textContent=n+' / 3 확인됨';
-  // 모두 열었을 때
-  if(n===3){
-    const sum=document.getElementById('sum'+scene);
-    const nav=document.getElementById('nav'+scene);
-    if(sum){sum.classList.add('on');setTimeout(()=>sum.scrollIntoView({behavior:'smooth',block:'nearest'}),100);}
-    if(nav){nav.style.display='flex';setTimeout(()=>nav.scrollIntoView({behavior:'smooth',block:'nearest'}),400);}
+  // 오프닝 애니메이션
+  if (n === 0) { setTimeout(runOpeningAnim, 100); }
+  // 뒤로가기 버튼 — 씬 0은 숨김, 나머지는 표시
+  document.querySelectorAll('.btn-back').forEach(b => b.remove());
+  if (n > 0) {
+    const backBtn = document.createElement('button');
+    backBtn.className = 'btn-back';
+    backBtn.textContent = '이전으로';
+    backBtn.onclick = goBack;
+    if (t) t.prepend(backBtn);
+  }
+  // 타이핑 씬 처리
+  if (TYPING_SCENES[n]) {
+    const steps = TYPING_SCENES[n];
+    function runStep(i) {
+      if (i >= steps.length) return;
+      const step = steps[i];
+      const txt = TYPING[step.id];
+      if (!txt) { runStep(i+1); return; }
+      typeText(step.id, txt, () => {
+        if (step.navId) {
+          const nav = document.getElementById(step.navId);
+          if (nav) nav.style.display = 'flex';
+        } else {
+          runStep(i + 1);
+        }
+      });
+    }
+    setTimeout(() => runStep(0), 400);
   }
 }
 
-// ── TYPE_B — 단일 선택 ───────────────────────────────────
-function pickB(scene,letter,type,resId){
+// ── 환생 시퀀스 — 문장 페이드인/아웃 ────────────────────
+const RB_STEPS = [
+  { text:'1335년 · 고려 · 함경도 화령', cls:'small', hold:2000 },
+  { portal:true, hold:2200 },
+  { text:'낯선 몸이다', cls:'', hold:2200 },
+  { text:'무겁다 — 갑옷인가', cls:'', hold:2000 },
+  { text:'손에 칼이 쥐어져 있다', cls:'', hold:2200 },
+  { text:'누군가 울고 있다', cls:'dim', hold:2200 },
+  { text:'이성계의 기억이 흘러든다', cls:'gold', hold:2500 },
+  { text:'당신은 지금 — 1356년의 이성계다', cls:'small', hold:2500, last:true },
+];
+
+let rbTimers = [];
+
+function startRebirth() {
+  switchScene(1);
+  rbTimers.forEach(clearTimeout); rbTimers = [];
+  const stage = document.getElementById('rb-stage');
+  const portal = document.getElementById('rb-portal');
+  const cta = document.getElementById('rb-cta');
+  stage.innerHTML = '';
+  portal.style.display = 'none';
+  portal.classList.remove('show');
+  cta.style.opacity = '0';
+
+  let cursor = 0; // ms 누적
+
+  RB_STEPS.forEach((step, idx) => {
+    const FADE_IN = 1200;
+    const FADE_OUT = 900;
+
+    if (step.portal) {
+      // 포털 등장
+      rbTimers.push(setTimeout(() => {
+        portal.style.display = 'flex';
+        setTimeout(() => portal.classList.add('show'), 50);
+      }, cursor));
+      cursor += FADE_IN + step.hold;
+      // 포털 페이드아웃 (마지막 포털이므로 유지)
+    } else {
+      const el = document.createElement('div');
+      el.className = 'rb-sentence' + (step.cls ? ' ' + step.cls : '');
+      el.textContent = step.text;
+      stage.appendChild(el);
+
+      // 페이드인
+      const elRef = el;
+      rbTimers.push(setTimeout(() => {
+        elRef.classList.add('show');
+      }, cursor + 50));
+
+      // hold 후 페이드아웃 (마지막 제외)
+      if (!step.last) {
+        rbTimers.push(setTimeout(() => {
+          elRef.style.transition = 'opacity ' + (FADE_OUT/1000) + 's ease';
+          elRef.style.opacity = '0';
+          setTimeout(() => { if(elRef.parentNode) elRef.parentNode.removeChild(elRef); }, FADE_OUT);
+        }, cursor + FADE_IN + step.hold));
+        cursor += FADE_IN + step.hold + FADE_OUT;
+      } else {
+        cursor += FADE_IN + step.hold;
+        // 마지막 문장 후 CTA 등장
+        rbTimers.push(setTimeout(() => {
+          cta.style.opacity = '1';
+        }, cursor + 400));
+      }
+    }
+  });
+}
+
+// ── 기억 아코디언 ─────────────────────────────────────────
+function toggleMem(el) { el.classList.toggle('open'); }
+
+// ── TYPE_A ────────────────────────────────────────────────
+const stateA = {};
+function revA(scene, letter, chipId) {
+  const key = scene + '_' + letter;
+  if (stateA[key]) return;
+  stateA[key] = true;
+  const btn = document.getElementById('c' + scene + letter);
+  if (btn) btn.classList.add('revealed');
+  const ans = document.getElementById('ans' + scene + letter);
+  if (ans) ans.classList.add('on');
+  const chip = document.getElementById(chipId);
+  if (chip) chip.classList.add('found');
+  const n = ['a','b','c'].filter(l => stateA[scene+'_'+l]).length;
+  const fill = document.getElementById('fill' + scene);
+  const cnt = document.getElementById('cnt' + scene);
+  if (fill) fill.style.width = (n/3*100) + '%';
+  if (cnt) cnt.textContent = n + ' / 3 확인됨';
+  if (n === 3) {
+    const sum = document.getElementById('sum' + scene);
+    const nav = document.getElementById('nav' + scene);
+    if (sum) { sum.classList.add('on'); setTimeout(() => sum.scrollIntoView({behavior:'smooth',block:'nearest'}), 100); }
+    if (nav) { nav.style.display = 'flex'; setTimeout(() => nav.scrollIntoView({behavior:'smooth',block:'nearest'}), 400); }
+  }
+}
+
+// ── TYPE_B ────────────────────────────────────────────────
+function pickB(scene, letter, type, resId) {
   resetB(scene);
-  const btn=document.getElementById('c'+scene+letter);
-  if(btn)btn.classList.add(type==='good'?'good-pick':type==='bad'?'bad-pick':'neutral-pick');
-  // 나머지 잠금
-  ['a','b','c'].forEach(l=>{
-    if(l!==letter){const b=document.getElementById('c'+scene+l);if(b)b.classList.add('locked');}
+  const btn = document.getElementById('c' + scene + letter);
+  if (btn) btn.classList.add(type==='good'?'good-pick':type==='bad'?'bad-pick':'neutral-pick');
+  ['a','b','c'].forEach(l => {
+    if (l !== letter) { const b = document.getElementById('c'+scene+l); if(b) b.classList.add('locked'); }
   });
-  const res=document.getElementById(resId);
-  if(res){res.classList.add('on');setTimeout(()=>res.scrollIntoView({behavior:'smooth',block:'nearest'}),80);}
+  const res = document.getElementById(resId);
+  if (res) { res.classList.add('on'); setTimeout(() => res.scrollIntoView({behavior:'smooth',block:'nearest'}), 80); }
 }
-
-function resetB(scene){
-  ['a','b','c'].forEach(l=>{
-    const b=document.getElementById('c'+scene+l);
-    if(b)b.className='ch';
-    const r=document.getElementById('r'+scene+l);
-    if(r)r.classList.remove('on');
+function resetB(scene) {
+  ['a','b','c'].forEach(l => {
+    const b = document.getElementById('c' + scene + l);
+    if (b) b.className = 'ch';
+    const r = document.getElementById('r' + scene + l);
+    if (r) r.classList.remove('on');
   });
 }
 
-function resetAll(n){
-  // TYPE_A 씬
-  if(n===3||n===8){
-    ['a','b','c'].forEach(l=>{
-      const b=document.getElementById('c'+n+l);
-      if(b)b.className='ch';
-      const a=document.getElementById('ans'+n+l);
-      if(a)a.classList.remove('on');
+function resetAll(n) {
+  const typeA = [5, 15];
+  const typeB = [7, 9, 11, 13];
+  if (typeA.includes(n)) {
+    ['a','b','c'].forEach(l => {
+      const b = document.getElementById('c'+n+l); if(b) b.className='ch';
+      const a = document.getElementById('ans'+n+l); if(a) a.classList.remove('on');
     });
-    const sum=document.getElementById('sum'+n);
-    const nav=document.getElementById('nav'+n);
-    if(sum)sum.classList.remove('on');
-    if(nav)nav.style.display='none';
+    const sum = document.getElementById('sum'+n); if(sum) sum.classList.remove('on');
+    const nav = document.getElementById('nav'+n); if(nav) nav.style.display='none';
   }
-  // TYPE_B 씬
-  if([4,5,6,7].includes(n)) resetB(n);
+  if (typeB.includes(n)) resetB(n);
+  // 타이핑 nav 숨기기
+  ['nav3a','nav4a','nav6a','nav8a','nav10a','nav12a','nav14a'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.style.display='none';
+  });
 }
 
-// ── 후기 저장 ────────────────────────────────────────────
-function saveJournal(){
-  const txt=document.getElementById('journalText').value.trim();
-  if(!txt)return;
-  document.getElementById('journalSavedText').textContent=txt;
-  document.getElementById('journalSaved').style.display='block';
-  setTimeout(()=>document.getElementById('journalSaved').scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+// ── 후기 저장 ─────────────────────────────────────────────
+function saveJournal() {
+  const txt = document.getElementById('journalText').value.trim();
+  if (!txt) return;
+  document.getElementById('journalSavedText').textContent = txt;
+  document.getElementById('journalSaved').style.display = 'block';
+  setTimeout(() => document.getElementById('journalSaved').scrollIntoView({behavior:'smooth',block:'nearest'}), 100);
 }
+
+// 페이지 로드 시 오프닝 애니메이션 자동 시작
+window.addEventListener('load', () => setTimeout(runOpeningAnim, 300));
 </script>
 </body>
 </html>
